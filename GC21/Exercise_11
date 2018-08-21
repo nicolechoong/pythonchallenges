@@ -1,0 +1,13 @@
+#11. Write a program to draw a shape like this:
+
+import turtle
+wn = turtle.Screen()
+hi = turtle.Turtle()
+
+hi.hideturtle()
+
+for i in range(0,5):
+    hi.forward(200)
+    hi.right(144)
+
+wn.mainloop()

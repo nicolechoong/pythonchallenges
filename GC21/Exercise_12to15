@@ -1,0 +1,38 @@
+#12. Write a program to draw a face of a clock that looks something like this:
+
+import turtle
+wn = turtle.Screen()
+melvyn = turtle.Turtle()
+
+wn.bgcolor("lightgreen")
+melvyn.color("blue")
+melvyn.shape("turtle")
+melvyn.width("4")
+melvyn.stamp()
+
+for i in range(0,12):
+    melvyn.penup()
+    melvyn.forward(160)
+    melvyn.pendown()
+    melvyn.forward(20)
+    melvyn.penup()
+    melvyn.forward(20)
+    melvyn.stamp()
+    melvyn.backward(200)
+    melvyn.right(30)
+
+wn.mainloop()
+
+#13. Create a turtle, and assign it to a variable. When you ask for its type, what do you get?
+
+print(type(melvyn))
+
+#14. What is the collective noun for turtles? (Hint: they don’t come in herds.)
+
+# According to Google it is either a bale, nest, turn or dole
+
+#15. What the collective noun for pythons? Is a python a viper? Is a python venomous?
+
+# There is no standard collective noun for pythons
+# Pythons are not vipers
+# Pythons are not venomous

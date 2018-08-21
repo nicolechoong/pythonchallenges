@@ -1,0 +1,68 @@
+#1. Write a program that prints We like Python's turtles! 1000 times.
+
+for i in range(0,1000):
+    print("We like Python's turtles!")
+
+#2. Give three attributes of your cellphone object. Give three methods of your cellphone.
+
+#Attributes: A camera, a speaker, a touch screen
+#Methods: Alarm setting, capturing pictures, storing images
+
+#3. Write a program that uses a for loop to print
+
+for n in ["January","February","March","Apri","May","June","July","August","September","October","November","December"]:
+    print("One of the months of the year is "+str(n)+".")
+
+#4. Suppose our turtle tess is at heading 0 — facing east. We execute the statement tess.left(3645). What does tess do, and what is her final heading?
+
+#Tess will turn around in 10 complete anticlockwise circles without changing position and end up facing North East.
+
+#5. Assume you have the assignment xs = [12, 10, 32, 3, 66, 17, 42, 99, 20]
+    #a. Write a loop that prints each of the numbers on a new line.
+    #b. Write a loop that prints each number and its square on a new line.
+    #c. Write a loop that adds all the numbers from the list into a variable called total. You should set the total variable to have the value 0 before you start adding them up, and print the value in total after the loop has completed.
+    #d. Print the product of all the numbers in the list. (product means all multiplied together)
+
+for xs in [12, 10, 32, 3, 66, 17, 42, 99, 20]:
+    print(str(xs))
+
+for xs in [12, 10, 32, 3, 66, 17, 42, 99, 20]:
+    print(str(xs**2))
+
+total = 0
+for xs in [12, 10, 32, 3, 66, 17, 42, 99, 20]:
+    total = xs + total
+print(str(total))
+
+multiply = 1
+for xs in [12, 10, 32, 3, 66, 17, 42, 99, 20]:
+    multiply = xs * multiply
+print(str(multiply))
+
+#6. Use for loops to make a turtle draw these regular polygons (regular means all sides the same lengths, all angles the same):
+    # An equilateral triangle
+    # A square
+    # A hexagon (six sides)
+    # An octagon (eight sides)
+
+import turtle
+wn = turtle.Screen()
+bob = turtle.Turtle()
+
+for i in range(0,3):
+    bob.forward(100)
+    bob.left(120)
+
+for i in range(0,4):
+    bob.forward(100)
+    bob.left(90)
+
+for i in range(0,6):
+    bob.forward(100)
+    bob.left(60)
+
+for i in range(0,8):
+    bob.forward(100)
+    bob.left(45)
+
+wn.mainloop()

@@ -1,0 +1,42 @@
+#10. At the interactive prompt, anticipate what each of the following lines will do, and then record what happens. Score yourself, giving yourself one point for each one you anticipate correctly:
+
+import turtle
+wn = turtle.Screen()
+#Prediction: Window opens
+# 1
+
+tess = turtle.Turtle()
+#Prediction: Calls turtle and names it tess
+# 1
+
+tess.right(90)
+#Prediction: Turns tess 90 degrees clockwise so that it is facing South
+# 1
+
+tess.left(3600)
+#Prediction: Makes 10 complete circles turning anticlockwise
+# 1
+
+tess.right(-90)
+#Prediction: Turns tess 90 degrees anticlockwise so that it is facing East
+# 1
+
+tess.speed(10)
+#Prediction: Makes tess move faster
+# 1
+
+tess.left(3600)
+#Prediction: Makes 10 complete circles turning anticlockwise quickly
+# 1
+
+tess.speed(0)
+#Prediction: Disables animation and makes the remainder of tess's movements instantaneous
+# 1
+
+tess.left(3645)
+#Prediction: Turns around in 10 complete anticlockwise circles so that tess ends facing North East
+# 1
+
+tess.forward(-100)
+#Prediction: Tess moves 100 spaces backwards in the heading of South West
+# 1

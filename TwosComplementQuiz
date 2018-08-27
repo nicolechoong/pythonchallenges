@@ -1,0 +1,59 @@
+#IT IS EMBARRASSINGLY UNCONCISE BUT IT WORKS 
+
+import random
+
+lives = 3
+
+print("Twos Complement Quiz!")
+print("There will be 10 questions and you have 3 lives.")
+print("Start!")
+print("Lives left: "+str(lives))
+print("")
+
+for i in range(0,10):
+    if lives > 0:
+        while True:
+            q = random.randint(-127,127)
+            pa = str(input("\nConvert "+str(q)+" into twos complement form.\n   > "))
+            if q >= 0:
+                ca = ((bin(q))[2::])
+                ca = str(ca)
+                while True:
+                    if len(ca) == 8:
+                        break
+                    else:
+                        ca = "0"+ca
+                if pa == ca:
+                    print("Correct.")
+                    break
+                else:
+                    print("Incorrect.")
+                    lives = lives - 1
+                    print("Lives left: "+str(lives))
+                    if lives == 0:
+                        print("Game Over")
+                        break
+            if q < 0:
+                ca = str(q)[1::]
+                ca = int(ca)
+                ca = 128 - ca
+                ca = str(bin(ca))[2::]
+                while True:
+                    if len(ca) == 7:
+                        ca = "1"+ca
+                        break
+                    else:
+                        ca = "0"+ca
+                if pa == ca:
+                    print("Correct.")
+                    break
+                else:
+                    print("Incorrect.")
+                    lives = lives - 1
+                    print("Lives left: "+str(lives))
+                    if lives == 0:
+                        print("Game Over.")
+                        break
+
+if lives > 0:
+    print("Congrats.")

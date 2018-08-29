@@ -1,0 +1,22 @@
+import turtle
+wn = turtle.Screen()
+wn.bgcolor("lightgreen")
+turt = turtle.Turtle()
+turt.color("hotpink")
+turt.width(3)
+
+def star():
+    for a in range(0,5):
+        for i in range(0,5):
+            turt.forward(100)
+            turt.right(144)
+        turt.penup()
+        turt.forward(350)
+        turt.right(144)
+        turt.pendown()
+
+star()
+
+wn.mainloop()
+
+

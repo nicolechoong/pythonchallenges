@@ -1,0 +1,11 @@
+def sum_to(n):
+    m = 0
+    while True:
+        if n == 0:
+            break
+        m = m+n
+        n = n-1
+    print(m)
+
+n=int(input("Input a number pls.\n   > "))
+sum_to(n)

@@ -1,0 +1,7 @@
+import math
+
+def area_of_circle(r):
+    print(r**2 * math.pi)
+
+r = int(input("Input the radius.\n   > "))
+area_of_circle(r)

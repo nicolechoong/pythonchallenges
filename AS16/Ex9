@@ -1,0 +1,13 @@
+import turtle
+wn = turtle.Screen()
+turt = turtle.Turtle()
+turt.width(2)
+
+def star():
+    for i in range(0,5):
+        turt.forward(100)
+        turt.right(144)
+
+star()
+
+wn.mainloop()

@@ -1,0 +1,19 @@
+import turtle
+wn = turtle.Screen()
+wn.bgcolor("lightgreen")
+turt = turtle.Turtle()
+turt.color("hotpink")
+turt.width(3)
+
+def square(t):
+    for i in range (0,4):
+        turt.forward(20)
+        turt.left(90)
+    turt.penup()
+    turt.forward(40)
+    turt.pendown()
+
+for i in range (0,5):
+    square(turt)
+
+wn.mainloop()

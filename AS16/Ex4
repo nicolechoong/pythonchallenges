@@ -1,0 +1,15 @@
+import turtle
+wn = turtle.Screen()
+wn.bgcolor("lightgreen")
+turt = turtle.Turtle()
+turt.color("blue")
+turt.width(2)
+turt.speed(0)
+
+for i in range(0,20):
+    for a in range(0,4):
+        turt.forward(100)
+        turt.left(90)
+    turt.left(18)
+
+wn.mainloop()

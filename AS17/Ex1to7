@@ -1,0 +1,94 @@
+import turtle
+
+#1. Assume the days of the week are numbered 0,1,2,3,4,5,6 from Sunday to Saturday. Write a function which is given the day number, and it returns the day name (a string).
+
+Days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
+
+def dayname(n):
+   print(Days[n])
+
+d = int(input("Insert day number\n   > "))
+print("")
+dayname(d)
+
+#2. You go on a wonderful holiday (perhaps to jail, if you don’t like happy exercises) leaving on day number 3 (a Wednesday). You return home after 137 sleeps. Write a general version of the program which asks for the starting day number, and the length of your stay, and it will tell you the name of day of the week you will return on.
+
+sd = int(input("\nPlease insert starting day number\n   > "))
+print("")
+leng = int(input("Please insert the length of your stay\n   > "))
+
+sd = (sd + (leng%7))%7
+print("")
+dayname(sd)
+
+#3. Give the logical opposites of these conditions
+
+# a > b becomes a <= b
+# a >= b becomes a < b
+# a >= 18 and day == 3 becomes a < 18 or day!= 3
+# a >= 18 and day != 3 becomes a < 18 or day == 3
+
+#4. What do these expressions evaluate to?
+
+# 3 == 3 evaluates to True
+# 3 != 3 evaluates to False
+# 3 >= 4 evaluates to False
+# not (3 < 4) evaluated to False
+
+#5. Complete this truth table:
+
+# T
+# T
+# T
+# T
+# T
+# T
+# F
+# T
+
+#6. Write a function which is given an exam mark, and it returns a string — the grade for that mark — according to this scheme:
+
+xs = [83, 75, 74.9, 70, 69.9, 65, 60, 59.9, 55, 50, 49.9, 45, 44.9, 40, 39.9, 2, 0]
+
+print("")
+def sorto(g):
+   if g >= 75:
+       p = "First"
+   elif g >= 70:
+       p = "Upper Second"
+   elif g >= 60:
+       p = "Second"
+   elif g >= 50:
+       p = "Third"
+   elif g >= 45:
+       p = "F1 Supp"
+   elif g >= 40:
+       p = "F2"
+   else:
+       p = "F3"
+   print("Mark: "+str(xs[z])+ "     Grade: "+str(p))
+
+for z in range(0,len(xs)):
+   sorto(xs[z])
+
+#7. Modify the turtle bar chart program so that the pen is up for the small gaps between each bar.
+
+def draw_bar(t, height):
+   """ Get turtle t to draw one bar, of height. """
+   t.left(90)
+   t.forward(height)     # Draw up the left side
+   t.right(90)
+   t.forward(40)         # Width of bar, along the top
+   t.right(90)
+   t.forward(height)     # And down again!
+   t.left(90)
+   t.penup()
+   t.forward(10)         # Leave small gap after each bar
+   t.pendown()
+
+wn = turtle.Screen()         # Set up the window and its attributes
+tess = turtle.Turtle()       # Create tess and set some attributes
+tess.pensize(3)
+
+for v in xs:              # Assume xs and tess are ready
+   draw_bar(tess, v)

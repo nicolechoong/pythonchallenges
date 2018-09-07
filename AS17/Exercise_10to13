@@ -1,0 +1,65 @@
+#10. Write a function find_hypot which, given the length of two sides of a right-angled triangle, returns the length of the hypotenuse. (Hint: x ** 0.5 will return the square root.)
+
+def find_hypot(a, b ):
+    c = a**2 + b**2
+    c = c**0.5
+    print("The length of the hypotenuse is "+str(c))
+
+a = float(input("Please input the length of the first side\n   > "))
+print("")
+b = float(input("Please input the length of the second side\n   > "))
+print("")
+find_hypot(a,b)
+
+#11. Write a function is_rightangled which, given the length of three sides of a triangle, will determine whether the triangle is right-angled. Assume that the third argument to the function is always the longest side. It will return True if the triangle is right-angled, or False otherwise.
+
+print("")
+def is_rightangled(d, e, f):
+    if abs(f**2 - d**2 - e**2) < 0.0001:
+        print("True")
+    else:
+        print("False")
+
+d = float(input("Please input the length of the first side\n   > "))
+print("")
+e = float(input("Please input the length of the second side\n   > "))
+print("")
+f = float(input("Please input the length of the third and longest side\n   > "))
+print("")
+is_rightangled(d, e, f)
+
+#12. Extend the above program so that the sides can be given to the function in any order.
+
+print("")
+def is_rightangled(d, e, f):
+    if abs(f**2 - d**2 - e**2) < 0.0001:
+        print("True")
+    else:
+        print("False")
+
+m = float(input("Please input the length of the first side\n   > "))
+print("")
+n = float(input("Please input the length of the second side\n   > "))
+print("")
+o = float(input("Please input the length of the third side\n   > "))
+print("")
+if m > n and m > o:
+    f = m
+    d = n
+    e = o
+elif n > m and n > o:
+    f = n
+    d = m
+    e = o
+elif o > m and o > n:
+    f = o
+    d = m
+    e = n
+is_rightangled(d, e, f)
+
+#13. If you’re intrigued by why floating point arithmetic is sometimes inaccurate, on a piece of paper, divide 10 by 3 and write down the decimal result. You’ll find it does not terminate, so you’ll need an infinitely long sheet of paper. The representation of numbers in computer memory or on your calculator has similar problems: memory is finite, and some digits may have to be discarded. So small inaccuracies creep in. Try this script:
+
+import math
+a = math.sqrt(2.0)
+print(a, a*a)
+print(a*a == 2.0)

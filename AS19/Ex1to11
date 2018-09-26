@@ -1,0 +1,155 @@
+# 1. Write a function to count how many odd numbers are in a list.
+
+a = [1,2,3,4,5,-7,-6,9]
+
+def odd_list(list):
+    count = 0
+    for i in list:
+        if i % 2 == 1:
+            count += 1
+    return count
+
+print(odd_list(a))
+
+# 2. Sum up all the even numbers in a list.
+
+def even_list(list):
+    count = 0
+    for i in list:
+        if i % 2 == 0:
+            count += 1
+    return count
+
+print(even_list(a))
+
+# 3. Sum up all the negative numbers in a list.
+
+def neg_list(list):
+    count = 0
+    for i in list:
+        if i < 0:
+            count += 1
+    return count
+
+print(neg_list(a))
+
+# 4. Count how many words in a list have length 5.
+
+b = ["hello","world","what","is","good","sam","help me"]
+
+def leng_5(list):
+    count = 0
+    for i in list:
+        if len(i) == 5:
+            count += 1
+    return count
+
+print(leng_5(b))
+
+# 5. Sum all the elements in a list up to but not including the first even number. (Write your unit tests. What if there is no even number?)
+
+def psum(list):
+    if even_list(list) == 0:
+        return sum(list)
+    else:
+        for i in list:
+            if i % 2 == 0:
+                list.remove(i)
+                break
+        return sum(list)
+
+print(psum(a))
+
+# 6. Count how many words occur in a list up to and including the first occurrence of the word “sam”. (Write your unit tests for this case too. What if “sam” does not occur?)
+
+def sam(list):
+    count = 0
+    if "sam" not in list:
+        return len(list)
+    else:
+        for i in list:
+            count += 1
+            if i == "sam":
+                break
+        return (count)
+
+print(sam(b))        
+
+# 7. Add a print function to Newton’s sqrt function that prints out better each time it is calculated. Call your modified function with 25 as an argument and record the results.
+
+def sqrt(n):
+    approx = n/2.0
+    while True:
+        better = (approx + n/approx)/2.0
+        print(better)
+        if abs(approx - better) < 0.001:
+            return better
+        approx = better
+
+print(sqrt(25))
+
+# 8. Trace the execution of the last version of print_mult_table and figure out how it works.
+
+def print_multiples(n, high):           # Defining the function print_multiples which takes in two value
+    for i in range(1, high):
+        print(n * i, end="   ")             # Printing the multiples of n with spaces in between from the 1st to the high-th multiple of n
+    print()             # Causes the next output to run on the next line down instead of all in the same line
+
+def print_mult_table(high):         # Defining the function print_mult_table which takes in one value called high
+    for i in range(1, high+1):
+        print_multiples(i, i+1)         # The function print_multiples is executed using the value of i and i + 1, causing it to print a multiplication row for i from the 1st term to the i-th term
+                                                    # Because this operation is in a for loop, it repeats for as many rows as the input number defined
+
+print_mult_table(7)
+
+# 9. Write a function print_triangular_numbers(n) that prints out the first n triangular numbers. A call to print_triangular_numbers(5) would produce the following output:
+
+def print_triangular_numbers(n):
+    for i in range(1, n+1):
+        tri = 0
+        for a in range(1, i+1):
+            tri += a
+        print(str(i) +"      "+str(tri))
+
+print_triangular_numbers(5)
+
+# 10. Write a function, is_prime, which takes a single integer argument and returns True when the argument is a prime number and False otherwise. Add tests for cases like this:
+
+def is_prime(n):
+    for o in range(2,n):
+        if n % o == 0:
+            return False
+    return True
+
+import sys
+
+def test(did_pass):
+    """  Print the result of a test.  """
+    linenum = sys._getframe(1).f_lineno   # Get the caller's line number.
+    if did_pass:
+        msg = "Test at line {0} ok.".format(linenum)
+    else:
+        msg = ("Test at line {0} FAILED.".format(linenum))
+    print(msg)
+
+test(is_prime(11))
+test(not is_prime(35))
+test(is_prime(19911121))
+test(is_prime(20020129))        # My birthday
+
+# 11. Revisit the drunk pirate problem from the exercises in chapter 3. This time, the drunk pirate makes a turn, and then takes some steps forward, and repeats this. Our social science student now records pairs of data: the angle of each turn, and the number of steps taken after the turn. Her experimental data is [(160, 20), (-43, 10), (270, 8), (-43, 12)]. Use a turtle to draw the path taken by our drunk friend.
+
+import turtle
+
+wn = turtle.Screen()
+bobert = turtle.Turtle()
+
+exp = [(160, 20), (-43, 10), (270, 8), (-43, 12)]
+
+for i in exp:
+    n = i[0]
+    e = i[1]
+    bobert.left(n)
+    bobert.forward(e)
+
+wn.mainloop()

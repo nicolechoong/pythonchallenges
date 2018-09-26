@@ -1,0 +1,83 @@
+# 12. Many interesting shapes can be drawn by the turtle by giving a list of pairs like we did above, where the first item of the pair is the angle to turn, and the second item is the distance to move forward. Set up a list of pairs so that the turtle draws a house with a cross through the centre, as show here. This should be done without going over any of the lines / edges more than once, and without lifting your pen.
+
+import turtle
+
+wn = turtle.Screen()
+bobert = turtle.Turtle()
+
+house = [(0,100),(90,100),(90,100),(-135,70.71),(-90,70.71),(-90,141.42),(-135,100),(-135,141.42)]
+
+for i in house:
+    n = i[0]
+    e = i[1]
+    bobert.left(n)
+    bobert.forward(e)
+
+wn.mainloop()
+
+# 13.
+
+# Yes
+# Yes
+# No
+# No
+# Yes
+# Yes
+
+# 14. What will num_digits(0) return? Modify it to return 1 for this case. Why does a call to num_digits(-24) result in an infinite loop? (hint: -1//10 evaluates to -1) Modify num_digits so that it works correctly with any integer value. Add these tests:
+
+def num_digits(n):
+    count = 0
+    n = abs(n)
+    if n == 0:
+        return 1
+    while n != 0:
+        count = count + 1
+        n = n // 10
+    return count
+
+import sys
+
+def test(did_pass):
+    """  Print the result of a test.  """
+    linenum = sys._getframe(1).f_lineno   # Get the caller's line number.
+    if did_pass:
+        msg = "Test at line {0} ok.".format(linenum)
+    else:
+        msg = ("Test at line {0} FAILED.".format(linenum))
+    print(msg)
+
+test(num_digits(0) == 1)
+test(num_digits(-12345) == 5)
+
+# 15. Write a function num_even_digits(n) that counts the number of even digits in n. These tests should pass:
+
+def num_even_digits(n):
+    count = 0
+    n = abs(n)
+    if n == 0:
+        return 1
+    while n != 0:
+        if n % 2 == 0:
+            count = count + 1
+        n = n // 10
+    return count
+
+test(num_even_digits(123456) == 3)
+test(num_even_digits(2468) == 4)
+test(num_even_digits(1357) == 0)
+test(num_even_digits(0) == 1)
+
+# 16. Write a function sum_of_squares(xs) that computes the sum of the squares of the numbers in the list xs. For example, sum_of_squares([2, 3, 4]) should return 4+9+16 which is 29:
+
+def sum_of_squares(xs):
+    count = 0
+    if len(xs) == 0:
+        return 0
+    for i in xs:
+        count += i**2
+    return count
+
+test(sum_of_squares([2, 3, 4]) == 29)
+test(sum_of_squares([ ]) == 0)
+test(sum_of_squares([2, -3, 4]) == 29)

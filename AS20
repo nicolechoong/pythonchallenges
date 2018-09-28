@@ -1,0 +1,205 @@
+# 1. What is the result of each of the following:
+
+# >>> "Python"[1]
+# "y"
+
+# >>> "Strings are sequences of characters."[5]
+# "g"
+
+# >>> len("wonderful")
+# 9
+
+# >>> "Mystery"[:4]
+# "Myst"
+
+# >>> "p" in "Pineapple"
+# True
+
+# >>> "apple" in "Pineapple"
+# True
+
+# >>> "pear" not in "Pineapple"
+# True
+
+# >>> "apple" > "pineapple"
+# False
+
+# >>> "pineapple" < "Peach"
+# False
+
+# 2. Modify: so that Ouack and Quack are spelled correctly.
+
+prefixes = "JKLMNOPQ"
+suffix = "ack"
+
+for letter in prefixes:
+    if letter in ["O","Q"]:
+        letter += "u"
+    print(letter + suffix)
+
+# 3. Encapsulate in a function named count_letters, and generalize it so that it accepts the string and the letter as arguments. Make the function return the number of characters, rather than print the answer. The caller should do the printing.
+
+def count_letters(string, letter):
+    count = 0
+    for n in string:
+        if n == letter:
+            count += 1
+    return count
+
+# 4. Now rewrite the count_letters function so that instead of traversing the string, it repeatedly calls the find method, with the optional third parameter to locate new occurrences of the letter being counted.
+
+def count_letters(string, letter):
+    count = string.find(letter)
+    return count
+
+# 5. Assign to a variable in your program a triple-quoted string that contains your favourite paragraph of text — perhaps a poem, a speech, instructions to bake a cake, some inspirational verses, etc.
+
+# Write a function which removes all punctuation from the string, breaks the string into a list of words, and counts the number of words in your text that contain the letter “e”. Your program should print an analysis of the text like this:
+
+import string
+
+def remove_punctuation(s):
+    s_without_punct = ""
+    for letter in s:
+        if letter not in string.punctuation:
+            s_without_punct += letter
+    return s_without_punct
+
+def count_e(text):
+    count = 0
+    tot = 0
+    text = remove_punctuation(text)
+    for letter in text:
+        tot += 1
+        if letter == "e":
+            count += 1
+    per = (count/tot) *100
+    per = str(per)+"%"
+    print('Your text contains %d words, of which %d (%s) contain an "e".' % (tot, count, per))
+
+count_e("""fkeokfowkmdmeigrijgeermwmejgiewodmwv dundundunDUNDUNDUN ekdoskdmwmfneowpsek enrichment is so fun dundundUN boom boom wow what a gr8901-1-1123 time to be alive in this industryyyy yes indeed lets do things prOPERLY twenty one hundred million nerds ohhoho flat earthers?? in enrichment???? more likely than you thiNK!!!! how is the UN plus henderson doing these days hmmmm are people living longer or are we all just born earlier how dAMN ejweif natural geographical lifestyle smifestyle ohhoho kwokdwokfejwifjwifejiw A MAP!!!!! im the map im the map wow people are actually so concentrated wait n vm oh wow board reading i bet everything is going to be c okay this right here is a psychic PREDICTION hmmmm arent there like LAWS and stuff wow i love the young life 2002 yeet yet doombabdoom book book ohhoho endangeration celebration rip rhinos dundundun opinion swaging left and right nyooming across the skyyyy electricity more like electrical titricity ohhoho lets make a competition out of this ooooo so this is climate change""")
+
+# 6. Print a neat looking multiplication table like this:
+
+def multab():
+    layout = "{0:>5}{1:>5}{2:>5}{3:>5}{4:>5}{5:>5}{6:5}{7:5}{8:5}{9:5}{10:5}{11:5}"
+    print(layout.format("1","2","3","4","5","6","7","8","9","10","11","12"))
+    print("  :--------------------------------------------------")
+    for n in range(1,13):
+        print(layout.format(n, n*2, n*3, n*4, n*5, n*6, n*7, n*8, n*9, n*10, n*11, n*12))
+
+multab()
+
+# 7. Write a function that reverses its string argument, and satisfies these tests:
+
+import sys
+
+def test(did_pass):
+    """  Print the result of a test.  """
+    linenum = sys._getframe(1).f_lineno   # Get the caller's line number.
+    if did_pass:
+        msg = "Test at line {0} ok.".format(linenum)
+    else:
+        msg = ("Test at line {0} FAILED.".format(linenum))
+    print(msg)
+
+def reverse(s):
+    return (s[::-1])
+
+test(reverse("happy") == "yppah")
+test(reverse("Python") == "nohtyP")
+test(reverse("") == "")
+test(reverse("a") == "a")
+
+# 8. Write a function that mirrors its argument:
+
+def mirror(s):
+    return s+s[::-1]
+
+test(mirror("good") == "gooddoog")
+test(mirror("Python") == "PythonnohtyP")
+test(mirror("") == "")
+test(mirror("a") == "aa")
+
+# 9. Write a function that removes all occurrences of a given letter from a string:
+
+def remove_letter(l, s):
+    t = ""
+    if l not in s:
+        return s
+    else:
+        for i in s:
+            if i != l:
+                t += i
+        return t
+
+test(remove_letter("a", "apple") == "pple")
+test(remove_letter("a", "banana") == "bnn")
+test(remove_letter("z", "banana") == "banana")
+test(remove_letter("i", "Mississippi") == "Msssspp")
+test(remove_letter("b", "") == "")
+test(remove_letter("b", "c") == "c")
+
+# 10. Write a function that recognizes palindromes. (Hint: use your reverse function to make this easy!):
+
+def is_palindrome(s):
+    if s == reverse(s):
+        return True
+    else:
+        return False
+
+test(is_palindrome("abba"))
+test(not is_palindrome("abab"))
+test(is_palindrome("tenet"))
+test(not is_palindrome("banana"))
+test(is_palindrome("straw warts"))
+test(is_palindrome("a"))
+test(is_palindrome(""))
+
+def count(s,st):
+    count = 0
+    for i in range(0,len(st)-(len(s)-1)):
+        test = ""
+        for g in range(0,len(s)):
+            test += st[i+g]
+        if test == s:
+            count += 1
+    return count
+
+test(count("is", "Mississippi") == 2)
+test(count("an", "banana") == 2)
+test(count("ana", "banana") == 2)
+test(count("nana", "banana") == 1)
+test(count("nanan", "banana") == 0)
+test(count("aaa", "aaaaaa") == 4)
+
+# 12. Write a function that removes the first occurrence of a string from another string:
+
+def remove(c, s):
+    if c not in s:
+        return s
+    else:
+        count = 0
+        hi = ""
+        for i in range(0,len(s)-(len(c)-1)):
+            test = ""
+            for g in range(0,len(c)):
+                test += s[i+g]
+            if test == c:
+                hi += s[0:i] + s[(i+g+1):]
+                return hi
+
+test(remove("an", "banana") == "bana")
+test(remove("cyc", "bicycle") == "bile")
+test(remove("iss", "Mississippi") == "Missippi")
+test(remove("eggs", "bicycle") == "bicycle")
+
+# 13. Write a function that removes all occurrences of a string from another string:
+
+def remove_all(c, s):
+    return s.replace(c,"")
+
+test(remove_all("an", "banana") == "ba")
+test(remove_all("cyc", "bicycle") == "bile")
+test(remove_all("iss", "Mississippi") == "Mippi")
+test(remove_all("eggs", "bicycle") == "bicycle")

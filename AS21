@@ -1,0 +1,21 @@
+# 1. We’ve said nothing in this chapter about whether you can pass tuples as arguments to a function. Construct a small Python example to test whether this is possible, and write up your findings.
+
+tup = ("hello","world","!")
+
+def stitch(t):
+    s = ""
+    for i in t:
+        s += i
+    return s
+
+print(stitch(tup))
+
+# Yes it is possible for a function to accept a tuple as an argument.
+
+# 2. Is a pair a generalization of a tuple, or is a tuple a generalization of a pair?
+
+# A pair is a generalisation of a tuple because tuples can have more than two items. A 2-tuple could be a pair as it consists of only two items (it is most often used for catersian coordinates)
+
+# 3. Is a pair a kind of tuple, or is a tuple a kind of pair?
+
+# A pair is a kind of tuple.

@@ -1,0 +1,72 @@
+# 1. Open help for the calendar module.
+
+# a. Try the following:
+
+import calendar
+cal = calendar.TextCalendar()      # Create an instance
+cal.pryear(2012)                   # What happens here?
+
+# cal.pryear(2012) prints out a formatted calendar for the year 2012
+
+# b. Observe that the week starts on Monday. An adventurous CompSci student believes that it is better mental chunking to have his week start on Thursday, because then there are only two working days to the weekend, and every week has a break in the middle. Read the documentation for TextCalendar, and see how you can help him print a calendar that suits his needs.
+
+cal = calendar.TextCalendar(3)
+cal.pryear(2012)
+
+# c. Find a function to print just the month in which your birthday occurs this year.
+
+mon = calendar.TextCalendar()
+mon.prmonth(2019, 1)
+
+# d. Try this:
+
+d = calendar.LocaleTextCalendar(6, "SPANISH")
+d.pryear(2012)
+
+# Try a few other languages, including one that doesn’t work, and see what happens.
+
+d = calendar.LocaleTextCalendar(6, "MALAY")
+d.pryear(2012)
+
+d = calendar.LocaleTextCalendar(6, "CHINESE")
+d.pryear(2012)
+
+# The language of the month and day of the week names changes
+
+# e. Experiment with calendar.isleap. What does it expect as an argument? What does it return as a result? What kind of a function is this?
+
+print(calendar.isleap(2012))
+print(calendar.isleap(2019))
+
+# calendar.isleap is a boolean function which accepts the input of a year and returns True if the year is a leap year and False is the year is not
+
+# 2. Open help for the math module.
+
+# a. How many functions are in the math module?
+
+print(help("math"))
+
+# 49
+
+# b. What does math.ceil do? What about math.floor? (hint: both floor and ceil expect floating point arguments.)
+
+#     ceil(x, /)
+#         Return the ceiling of x as an Integral.
+
+#     floor(x, /)
+#         Return the floor of x as an Integral.
+
+# c. Describe how we have been computing the same value as math.sqrt without using the math module.
+
+# Either by using a recursive function which slowly calculates itself closer and closer to the true sqrt value or by using the indicies mathematical operation **(1/2)
+
+# d. What are the two data constants in the math module?
+
+# 5 - e, infinity, nan, pi and tau
+
+# 3. Investigate the copy module. What does deepcopy do? In which exercises from last chapter would deepcopy have come in handy?
+
+print(help("copy"))
+
+# Deepcopy inserts copies of each object within an old compound object into a new one. It is different from a shallow copy which inserts the same objects into a new compound, causing any changes in the original compound to too reflect in the new one
+

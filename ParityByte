@@ -1,0 +1,33 @@
+bytes = ["1110110", "0010101", "1111110", "0000010", "1101001", "0001000", "0101111"]
+newb = []
+
+def parbit(byte):
+    total = 0
+    for i in byte:
+        if int(i) == 1:
+            total += 1
+    if total % 2 == 1:
+        return 1
+    if total %2 == 0:
+        return 0
+
+for i in bytes:
+    b = str(parbit(i))
+    newb.append(i+b)
+
+
+parbyte = ""
+print("PARITY BLOCK\n")
+for i in range(0,len(newb)):
+    tot = ""
+    for j in newb:
+        tot += j[i]
+    parbyte += str(parbit(tot))
+
+parbyte += str(parbit(parbyte))
+
+t = 0
+for k in newb:
+    t += 1
+    print("Byte "+str(t)+": \t\t"+k)
+print("Parity Byte: \t"+parbyte)

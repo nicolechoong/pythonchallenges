@@ -15,7 +15,6 @@ for i in bytes:
     b = str(parbit(i))
     newb.append(i+b)
 
-
 parbyte = ""
 print("PARITY BLOCK\n")
 for i in range(0,len(newb)):

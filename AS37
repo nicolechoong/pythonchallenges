@@ -1,0 +1,13 @@
+s = input("Please insert text\n   > ")
+
+def rep(l):
+    return str(l+"o"+str.lower(l))
+
+out = ""
+for i in s:
+    if str.lower(i) not in ["b","c","d","f","g","h","j","k","l","m","n","p","q","r","s","t","v","w","x","y","z"]:
+        out += i
+    else:
+        out+= rep(i)
+
+print("Output: "+out)

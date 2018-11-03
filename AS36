@@ -1,0 +1,16 @@
+li = []
+
+while True:
+    n = int(input("\nPlease insert an integer\n   > "))
+    li.append(n)
+    rep = input("\nHave all values been inputted?\n   > ")
+    if str.lower(rep) in ["y","yes"]:
+        break
+
+def mfal(l):
+    newlist = []
+    newlist.append(l[0])
+    newlist.append(l[-1])
+    return newlist
+
+print("\nLIST OF FIRST AND LAST TERMS\n"+str(mfal(li)))

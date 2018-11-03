@@ -1,0 +1,15 @@
+list = []
+
+while True:
+    n = int(input("\nPlease insert an integer\n   > "))
+    list.append(n)
+    rep = input("\nHave all values been inputted?\n   > ")
+    if str.lower(rep) in ["y","yes"]:
+        break
+    
+def histo(list):
+    for i in list:
+        print("*"*i)
+
+print("\nHISTOGRAM")
+histo(list)

@@ -1,0 +1,46 @@
+import string
+
+alph = {}
+
+for i in str(string.ascii_lowercase):
+    alph[i] = 0
+
+text = input("Load text. Over.\n   > ")
+
+for i in text:
+    for j in str(string.ascii_lowercase):
+        if i == j:
+            alph[j] += 1
+
+tt1 = [0,""]
+tt2 = [0,""]
+tt3 = [0,""]
+bb1 = [10000,""]
+bb2 = [10000,""]
+bb3 = [10000,""]
+
+for i in str(string.ascii_lowercase):
+    if alph[i] >= tt3[0]:
+        if alph[i] >= tt2[0]:
+            if alph[i] >= tt1[0]:
+                tt3 = tt2[:]
+                tt2 = tt1[:]
+                tt1 = [alph[i],i]
+            else:
+                tt3 = tt2[:]
+                tt2 = [alph[i],i]
+        else:
+            tt3 = [alph[i],i]
+    if alph[i] <= bb3[0]:
+        if alph[i] <= bb2[0]:
+            if alph[i] <= bb1[0]:
+                bb3 = bb2[:]
+                bb2 = bb1[:]
+                bb1 = [alph[i],i]
+            else:
+                bb3 = bb2[:]
+                bb2 = [alph[i],i]
+        else:
+            bb3 = [alph[i],i]
+
+print(str(tt1[1]), str(tt2[1]), str(tt3[1]), str(bb1[1]), str(bb2[1]), str(bb3[1]))

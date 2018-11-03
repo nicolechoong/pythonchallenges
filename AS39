@@ -1,0 +1,31 @@
+import random
+
+artist1 = ["artist1","song1","song2","song3","song4","song5","song6","song7","song8","song9","song10"]
+artist2 = ["artist2","song1","song2","song3","song4","song5","song6","song7","song8","song9","song10"]
+artist3 = ["artist3","song1","song2","song3","song4","song5","song6","song7","song8","song9","song10"]
+artist4 = ["artist4","song1","song2","song3","song4","song5","song6","song7","song8","song9","song10"]
+artist5 = ["artist5","song1","song2","song3","song4","song5","song6","song7","song8","song9","song10"]
+artist6 = ["artist6","song1","song2","song3","song4","song5","song6","song7","song8","song9","song10"]
+artist7 = ["artist7","song1","song2","song3","song4","song5","song6","song7","song8","song9","song10"]
+artist8 = ["artist8","song1","song2","song3","song4","song5","song6","song7","song8","song9","song10"]
+artist9 = ["artist9","song1","song2","song3","song4","song5","song6","song7","song8","song9","song10"]
+artist10 = ["artist10","song1","song2","song3","song4","song5","song6","song7","song8","song9","song10"]
+
+a1 = ""
+a2 = ""
+artists = [artist1, artist2, artist3, artist4, artist5, artist6, artist7, artist8, artist9, artist10]
+
+def nowp(a):
+    s = random.randint(1,len(artists[a])-1)
+    nps = artists[a][s]
+    artists[a].pop(s)
+    return nps
+
+for i in range(0,100):
+    while True:
+        a = random.randint(0,9)
+        if (len(artists[a]) != 1) and (artists[a][0] != (a2 and a1)):
+            a2 = str(a1)
+            a1 = artists[a][0]
+            break
+    print("Now Playing:",str(nowp(a)),"by",str(artists[a][0]))

@@ -1,0 +1,41 @@
+import random
+
+svt=[]
+
+for i in range(0,9):
+    svt.append(random.randint(0,1000))
+print(svt)
+
+if (int(svt[0]))>(int(svt[1])):
+    a,b= svt.index(svt[0]), svt.index(svt[1])
+    svt[a],svt[b]= svt[b],svt[a]
+
+elif (int(svt[1]))>(int(svt[2])):
+    a,b= svt.index(svt[1]), svt.index(svt[2])
+    svt[a],svt[b]= svt[b],svt[a]
+
+if (int(svt[2]))>(int(svt[3])):
+    a,b= svt.index(svt[2]), svt.index(svt[3])
+    svt[a],svt[b]= svt[b],svt[a]
+
+if (int(svt[3]))>(int(svt[4])):
+    a,b= svt.index(svt[3]), svt.index(svt[4])
+    svt[a],svt[b]= svt[b],svt[a]
+
+if (int(svt[4]))>(int(svt[5])):
+    a,b= svt.index(svt[4]), svt.index(svt[5])
+    svt[a],svt[b]= svt[b],svt[a]
+
+if (int(svt[5]))>(int(svt[6])):
+    a,b= svt.index(svt[5]), svt.index(svt[6])
+    svt[a],svt[b]= svt[b],svt[a]
+
+if (int(svt[6]))>(int(svt[7])):
+    a,b= svt.index(svt[6]), svt.index(svt[7])
+    svt[a],svt[b]= svt[b],svt[a]
+
+if (int(svt[7]))>(int(svt[8])):
+    a,b= svt.index(svt[7]), svt.index(svt[8])
+    svt[a],svt[b]= svt[b],svt[a]
+
+print (svt)

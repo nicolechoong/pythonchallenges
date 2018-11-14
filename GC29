@@ -1,0 +1,16 @@
+import random
+
+mansae=["amazing","brilliant","intelligent","bro-capable","smoking","thumping","paddling","salty","spicy","foreign","giraffe-like","drunk","slow working","thumbs down","cold","lukewarm","feverish"]
+fronting=["coldly", "hungrily","obsessively","unprogressingly","well","minimally","shapedly","ticklishly"]
+comment=["graduates","ceases consuming oxygen","stops farting unnecessarily","tones down the salt a little","learns to recycle","can spell their own name","stops screaming every thirty seconds"]
+werd=["pleasure","torture","tearful time","tragedy","honour","regret","spectacle","fun date idea with my partner","zoo field trip-esque","wild ride"]
+
+while True:
+    name=input("Name:")
+    adj=random.choice(mansae)
+    adv=random.choice(fronting)
+    addv=random.choice(fronting)
+    yr=random.randint(1,100)
+    com=random.choice(comment)
+    lest=random.choice(werd)
+    print('\n%s is a very %s learner' % (name,adj)+' who has worked very %s this term.' % (adv) + ' \nI believe that in %d years, greatness will be achieved from %s as soon as %s %s.' %(yr, name, name,com)+'\nI hope that %s can continue working %s next term. It was a %s teaching them.\n' %(name,addv,lest))

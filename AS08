@@ -1,0 +1,45 @@
+import random
+
+consent=input("play with me?")
+
+while True:
+    if consent in ["yes","y","Yes","YES","Y"]:
+        print("les play")
+        opt=['rock','paper','scissors']
+        cpp=random.choice(opt)
+        ppp=input("rock, paper or scissors?")
+        if ppp in ["rock","ROCK","Rock"]:
+            if cpp=='rock':
+                print("i put %s" % cpp)
+                print("tie lolol gg")
+            elif cpp=='scissors':
+                print("i put %s" % cpp)
+                print("you win aju nice")
+            else:
+                print("i put %s" % cpp)
+                print("you lose sucker")
+        if ppp in ["scissors","SCISSORS","Scissors"]:
+            if cpp=='scissors':
+                print("i put %s" % cpp)
+                print("tie lolol gg")
+            elif cpp=='paper':
+                print("i put %s" % cpp)
+                print("you win aju nice")
+            else:
+                print("i put %s" % cpp)
+                print("you lose sucker")
+        if ppp in ["paper","PAPER","Paper"]:
+            if cpp=='paper':
+                print("i put %s" % cpp)
+                print("tie lolol gg")
+            elif cpp=='rock':
+                print("i put %s" % cpp)
+                print("you win aju nice")
+            else:
+                print("i put %s" % cpp)
+                print("you lose sucker")
+    pag=input("play again?")
+    if pag==("no","n","NO","N","No"):
+        break
+    else:
+        print("woohoo leggo \n")

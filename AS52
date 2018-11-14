@@ -69,4 +69,3 @@ print(help("math"))
 print(help("copy"))
 
 # Deepcopy inserts copies of each object within an old compound object into a new one. It is different from a shallow copy which inserts the same objects into a new compound, causing any changes in the original compound to too reflect in the new one
-

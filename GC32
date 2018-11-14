@@ -1,0 +1,26 @@
+import random
+
+print("PRISONERS DILEMMA\n")
+
+while True:
+    choices=["Confess","Don't Confess"]
+    svt=random.choice(choices)
+
+    hoshi=input("Will you confess?")
+
+    if hoshi in ("Yes","yes","y","Y"):
+        if svt==("Confess"):
+            print("Both of you have confessed. \n You both have 5 years of prison each.")
+        elif svt==("Don't Confess"):
+            print("Only you have confessed. \n The computer has been sentenced to 20 years of prison and you are set free.")
+    elif hoshi in ("no","NO","No","n","N"):
+        if svt==("Don't confess"):
+            print("Both of you didn't confess. \n You both have 1 year of prison each.")
+        elif svt==("Confess"):
+            print("Only the computer has confessed. \n You have been sentenced to 20 years of prison and the computer is set free.")
+    yaaa=input("\nWould you like to play again?")
+    if yaaa in ("no","NO","No","n","N"):
+        print("You suck.")
+        break
+    else:
+        print("AGAIN")

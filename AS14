@@ -1,0 +1,16 @@
+words=str(input("Please insert text\n   > "))
+left=0
+right=0
+
+for i in range(0,len(words)):
+    if "("==words[i]:
+        left=left+1
+
+for j in range(0,len(words)):
+    if ")"==words[j]:
+        right=right+1
+
+if left == right:
+    print("Brackets even")
+else:
+    print("Brakcets uneven")

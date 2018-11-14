@@ -1,0 +1,13 @@
+import mymodule1
+import mymodule2
+
+print( (mymodule2.myage - mymodule1.myage) ==
+       (mymodule2.year - mymodule1.year)  )
+
+print("My name is", __name__)
+
+# Initially just prints "My name is __main__"
+
+# Now prints "My name is mymodule1"
+
+# Tim Peters says that Namespaces are one honking great idea -- let's do more of those!

@@ -1,0 +1,33 @@
+fc = []
+caal = 2000
+
+while True:
+    food = input("Please insert food\n   > ")
+    if food == "end day":
+        print("\nTODAY YOU ATE")
+        for i in range(0,len(fc)):
+            print(str(fc[i][0])+" which contained "+str(fc[i][1])+" calories")
+        print("\nTotal calorie consumption: "+str(2000 - caal))
+        if caal < 0:
+            print("\nOverall, you ate more calories than you need to stay healthy for the day")
+        elif caal > 0:
+            print("\nOverall, you didn't eat enough calories to stay healthy for the day")
+        elif caal == 0:
+            print("\nOverall, you ate just the right amount of calories for the day")
+        break
+    print()
+    while True:
+        cal = input("Please insert the amount of calories\n   > ")
+        try:
+            valid_number = int(cal)
+            if int(cal) > 0:
+                break
+            else:
+                print("\nNumber of calories has to be a positive number\n")
+        except ValueError:
+            print("\nPlease insert a valid amount\n")
+    print()
+    caal = caal - int(cal)
+    print("You need to consume %d more calories to stay healthy for the day" %caal)
+    print()
+    fc.append([food,cal])

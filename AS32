@@ -1,0 +1,13 @@
+import random
+
+flo = int(input("Please input the number of floors\n   > "))
+alr = []
+
+print("\nFLOOR VISITATION ORDER")
+while True:
+    m = random.randint(1,flo)
+    if m not in alr:
+        alr.append(m)
+        print("Floor",str(m))
+    if len(alr) == flo:
+        break

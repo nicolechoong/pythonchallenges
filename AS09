@@ -1,0 +1,68 @@
+import random
+
+f = open("words.txt")
+content = f.read()
+f.close()
+lives = 5
+
+four = []
+five = []
+six = []
+seven = []
+
+def likeness(key, guess):
+    li = 0
+    for i in range(0, 4):
+        if key[i] == guess[i]:
+            li += 1
+    return str(li)
+
+word = content.split()
+for i in word:
+    if len(i) == 4:
+        four.append(i)
+
+w1 = []
+
+for i in range(0,11):
+    w1.append(random.choice(four))
+
+m = random.randint(0,10)
+key = w1[m]
+
+print("Welcome to GIS Industries (TM) Termlink")
+print("Password Required")
+print("Attempts Remaining: "+str(lives)+"\n")
+
+p ='''!()-[]{};:'"\,<>./?@#$%^&*_~+='''
+e = random.randint(0,len(p)-1)
+
+te = ""
+for i in range(0,11):
+    while True:
+        e = random.randint(0,len(p))
+        if e == len(p):
+            te += w1[i]
+            break
+        else:
+            te += p[e]
+for i in range(0,5):
+    e = random.randint(0,len(p))
+    te += p[e]
+
+for a in range(0,len(te), 20):
+    print(te[a:a+20])
+
+print()
+for i in range(0,5):
+    guess = input("> ")
+    if guess == key:
+        print("> Access granted")
+        break
+    else:
+        lives -= 1
+        print("> Entry denied")
+        print("> Likeness = "+likeness(key, guess))
+        print("Attempts Remaining: "+str(lives)+"\n")
+        if lives == 0:
+            print("> Mission failed")

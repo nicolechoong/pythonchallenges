@@ -1,0 +1,70 @@
+board = [[[""],[" "],[""]],[[""],[""],[" "]],[[""],[""],[""]]]
+
+sx = {1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0, 9:0}
+so = {1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0, 9:0}
+num = {1:(0,0), 2:(0,1), 3:(0,2), 4:(1,0), 5:(1,1), 6:(1,2), 7:(2,0), 8:(2,1), 9:(2,2)}
+filled = []
+
+print("BOARD KEY\n[[[1],[2],[3]],\n[[4],[5],[6]],\n[[7],[8],[9]]]\n")
+
+def che(board):
+    x = ""
+    o = ""
+    for i in range(0,3):
+        for j in range(0,3):
+            if board[i][j] == ["X"]:
+                x += str(3*i + (j+1))
+            elif board[i][j] == ["O"]:
+                o += str(3*i + (j+1))
+    for i in range(1,10):
+        if str(i) in x:
+            sx[i] = 1
+    if (sx[1] and sx[2] and sx[3]) or (sx[1] and sx[4] and sx[7]) or (sx[1] and sx[5] and sx[9]) or (sx[2] and sx[5] and sx[8]) or (sx[3] and sx[6] and sx[9]) or (sx[4] and sx[5] and sx[6]) or (sx[7] and sx[8] and sx[9]) or (sx[3] and sx[5] and sx[7]) == 1:
+        return "x"
+    for i in range(1,10):
+        if str(i) in o:
+            so[i] = 1
+    if (so[1] and so[2] and so[3]) or (so[1] and so[4] and so[7]) or (so[1] and so[5] and so[9]) or (so[2] and so[5] and so[8]) or (so[3] and so[6] and so[9]) or (so[4] and so[5] and so[6]) or (so[7] and so[8] and so[9]) or (so[3] and so[5] and so[7]) == 1:
+        return "o"
+    else:
+        return "n"
+
+for i in range(0,9):
+    if i%2 == 0:
+        print("\nPlayer X GO")
+        p = int(input("Choose your SQUARE\n   > "))
+        while True:
+            if p not in filled:
+                filled.append(p)
+                (c,d) = num[p]
+                board[c][d].append("X")
+                board[c][d].pop(0)
+                print()
+                for i in board:
+                    print(i)
+                break
+            else:
+                print("\nSquare already filled\n")
+                p = int(input("Choose another SQUARE\n   > "))
+    else:
+        print("\nPlayer Y GO")
+        p = int(input("Choose your SQUARE\n   > "))
+        while True:
+            if p not in filled:
+                filled.append(p)
+                (c,d) = num[p]
+                board[c][d].append("O")
+                board[c][d].pop(0)
+                print()
+                for i in board:
+                    print(i)
+                break
+            else:
+                print("\nSquare already filled\n")
+                p = int(input("Choose another SQUARE\n   > "))
+    if che(board) == "x":
+        print("\nPlayer X wins")
+        break
+    elif che(board) == "o":
+        print("\nPlayer O wins")
+        break

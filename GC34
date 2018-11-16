@@ -1,0 +1,22 @@
+let = ["I","V","X","L","C","D","M"]
+u = {1: "0", 2: "00", 3: "000", 4: "01", 5: "1", 6: "10", 7: "100", 8: "1000", 9: "02", 0:""}
+
+def romnum(num):
+    rum = ""
+    dig = []
+    adig = list(str(num))
+    for i in adig:
+        dig.append(int(i))
+    dig = dig[::-1]
+    build = []
+    for i in range(0,len(dig)):
+        b = ""
+        for j in list(u[dig[i]]):
+            b += let[int(j)+2*i]
+        build.append(b)
+    build = build[::-1]
+    rum = "".join(build)
+    return rum
+
+for i in range(1,101):
+    print(romnum(i))

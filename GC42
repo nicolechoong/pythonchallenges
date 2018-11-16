@@ -1,0 +1,13 @@
+import random
+
+num = []
+
+for i in range(0,50):
+    e = random.randint(0,1000)
+    num.append(e)
+
+print(num)
+print()
+print("Minimum number: "+str(min(num)))
+print("Maximum number: "+str(max(num)))
+print("Mean average: "+str((sum(num)/len(num))))

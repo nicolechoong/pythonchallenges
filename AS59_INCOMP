@@ -1,0 +1,28 @@
+board = [[["X"],[" "],["O"]],[["X"],[" "],[" "]],[[" "],["O"],[" "]]]
+
+sx = {1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0, 9:0}
+so = {1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0, 9:0}
+
+def che(board):
+    x = ""
+    o = ""
+    for i in range(0,3):
+        for j in range(0,3):
+            if board[i][j] == ["X"]:
+                x += str(3*i + (j+1))
+            elif board[i][j] == ["O"]:
+                o += str(3*i + (j+1))
+    for i in range(1,10):
+        if str(i) in x:
+            sx[i] = 1
+    for i in range(1,10):
+        if str(i) in o:
+            so[i] = 1
+    return sx, so
+
+
+
+for i in board:
+    print(i)
+
+print(che(board))

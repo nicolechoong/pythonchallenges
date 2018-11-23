@@ -1,0 +1,70 @@
+# 1. Write a program that reads a file and writes out a new file with the lines in reversed order (i.e. the first line in the old file becomes the last one in the new file.)
+
+myfile = open("AS23_Ex1.txt", "w")
+
+lines = []
+read = open("AS23_Test.txt", "r")
+while True:
+    theline = read.readline()
+    if len(theline) == 0:
+        break
+    lines.append(theline)
+
+for i in lines[::-1]:
+    myfile.write(i)
+
+myfile.close()
+read.close()
+
+# 2. Write a program that reads a file and prints only those lines that contain the substring snake.
+
+def filter(file):
+    infile = open(file, "r")
+    while True:
+        text = infile.readline()
+        if len(text) == 0:
+            break  
+        if "snake" in text:
+            print(text)
+    infile.close()
+
+filter("AS23_Ex1.txt")
+
+# 3. Write a program that reads a text file and produces an output file which is a copy of the file, except the first five columns of each line contain a four digit line number, followed by a space. Start numbering the first line in the output file at 1. Ensure that every line number is formatted to the same width in the output file. Use one of your Python programs as test data for this exercise: your output should be a printed and numbered listing of the Python program.
+
+def nummo(n):
+    if int(n)<10:
+        m = "000"+n
+    elif int(n) < 100:
+        m = "00"+n
+    elif int(n) < 1000:
+        m = "0" +n
+    return m
+
+mf = open("A207.py","r")
+out = open("AS23_Ex3.txt","w")
+linenum = 0
+layout = "{0:<5}{1:<1}"
+while True:
+    linenum += 1
+    line = str(mf.readline())
+    if len(line) == 0:
+        break  
+    var = layout.format(nummo(str(linenum)), line)
+    out.write(var)
+
+mf.close()
+out.close()
+
+# 4. Write a program that undoes the numbering of the previous exercise: it should read a file with numbered lines and produce another file without line numbers.
+
+inf = open("AS23_Ex3.txt","r")
+outf = open("AS23_Ex4.txt","w")
+while True:
+    line = str(inf.readline())
+    if len(line) == 0:
+        break  
+    outf.write(line[5:])
+
+inf.close()
+outf.close()

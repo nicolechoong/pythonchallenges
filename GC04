@@ -1,0 +1,4 @@
+size = int(input("Please insert a number\n   > "))
+
+for i in range(1,2*size,2):
+    print("x"*i)

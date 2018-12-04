@@ -1,0 +1,611 @@
+import time
+
+def search_linear(xs, target):
+    """ Find and return the index of target in sequence xs """
+    for (i, v) in enumerate(xs):
+       if v == target:
+           return i
+    return -1
+
+def find_unknown_words(vocab, wds):
+    """ Return a list of words in wds that do not occur in vocab """
+    result = []
+    for w in wds:
+        if (search_linear(vocab, w) < 0):
+            result.append(w)
+    return result
+
+def load_words_from_file(filename):
+    """ Read words from filename, return list of words. """
+    f = open(filename, "r")
+    file_content = f.read()
+    f.close()
+    wds = file_content.split()
+    return wds
+
+bigger_vocab = load_words_from_file("vocab.txt")
+
+def text_to_words(the_text):
+    """ return a list of words with all punctuation removed,
+        and all in lowercase.
+    """
+
+    my_substitutions = the_text.maketrans(
+      # If you find any of these
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!\"#$%&()*+,-./:;<=>?@[]^_`{|}~'\\",
+      # Replace them by these
+      "abcdefghijklmnopqrstuvwxyz                                          ")
+
+    # Translate the text now.
+    cleaned_text = the_text.translate(my_substitutions)
+    wds = cleaned_text.split()
+    return wds
+
+def get_words_in_book(filename):
+    """ Read a book from filename, and return a list of its words. """
+    f = open(filename, "r")
+    content = f.read()
+    f.close()
+    wds = text_to_words(content)
+    return wds
+
+def search_binary(xs, target):
+    """ Find and return the index of key in sequence xs """
+    lb = 0
+    ub = len(xs)
+    while True:
+        if lb == ub:   # If region of interest (ROI) becomes empty
+           return -1
+
+        # Next probe should be in the middle of the ROI
+        mid_index = (lb + ub) // 2
+
+        # Fetch the item at that position
+        item_at_mid = xs[mid_index]
+
+        # print("ROI[{0}:{1}](size={2}), probed='{3}', target='{4}'"
+        #       .format(lb, ub, ub-lb, item_at_mid, target))
+
+        # How does the probed item compare to the target?
+        if item_at_mid == target:
+            return mid_index      # Found it!
+        if item_at_mid < target:
+            lb = mid_index + 1    # Use upper half of ROI next time
+        else:
+            ub = mid_index        # Use lower half of ROI next time
+
+def remove_adjacent_dups(xs):
+    """ Return a new list in which all adjacent
+        duplicates from xs have been removed.
+    """
+    result = []
+    most_recent_elem = None
+    for e in xs:
+        if e != most_recent_elem:
+            result.append(e)
+            most_recent_elem = e
+
+    return result
+
+def merge(xs, ys):
+    """ merge sorted lists xs and ys. Return a sorted result """
+    result = []
+    xi = 0
+    yi = 0
+
+    while True:
+        if xi >= len(xs):          # If xs list is finished,
+            result.extend(ys[yi:]) # Add remaining items from ys
+            return result          # And we're done.
+
+        if yi >= len(ys):          # Same again, but swap roles
+            result.extend(xs[xi:])
+            return result
+
+        # Both lists still have items, copy smaller item to result.
+        if xs[xi] <= ys[yi]:
+            result.append(xs[xi])
+            xi += 1
+        else:
+            result.append(ys[yi])
+            yi += 1
+
+# 1. The section in this chapter called Alice in Wonderland, again! started with the observation that the merge algorithm uses a pattern that can be reused in other situations. Adapt the merge algorithm to write each of these functions, as was suggested there:
+
+# a. Return only those items that are present in both lists.
+
+print("\nTASK 1\n")
+
+def find_unknowns_merge_pattern_a(vocab, wds):
+    """ Both the vocab and wds must be sorted.  Return a new
+        list of words from wds that do not occur in vocab.
+    """
+
+    result = []
+    xi = 0
+    yi = 0
+
+    while True:
+        if xi >= len(vocab):
+            result.extend(wds[yi:])
+            return result
+
+        if yi >= len(wds):
+            return result
+
+        if vocab[xi] == wds[yi]:  # Good, word exists in vocab
+            result.append(wds[yi])
+            yi += 1
+
+        elif vocab[xi] < wds[yi]: # Move past this vocab word,
+            xi += 1
+
+        else:                     # Got word that is not in vocab
+            yi += 1
+
+all_words = get_words_in_book("AliceInWonderland.txt")
+all_words.sort()
+book_words = remove_adjacent_dups(all_words)
+#missing_words = find_unknowns_merge_pattern_a(bigger_vocab, book_words)
+#print(missing_words)
+
+# b. Return only those items that are present in the first list, but not in the second.
+
+def find_unknowns_merge_pattern_b(wds, vocab):
+    """ Both the vocab and wds must be sorted.  Return a new
+        list of words from wds that do not occur in vocab.
+    """
+
+    result = []
+    xi = 0
+    yi = 0
+
+    while True:
+        if xi >= len(vocab):
+            result.extend(wds[yi:])
+            return result
+
+        if yi >= len(wds):
+            return result
+
+        if vocab[xi] == wds[yi]:  # Good, word exists in vocab
+            yi += 1
+
+        elif vocab[xi] < wds[yi]: # Move past this vocab word,
+            xi += 1
+
+        else:                     # Got word that is not in vocab
+            result.append(wds[yi])
+            yi += 1
+
+all_words = get_words_in_book("AliceInWonderland.txt")
+all_words.sort()
+book_words = remove_adjacent_dups(all_words)
+#missing_words = find_unknowns_merge_pattern_b(bigger_vocab, book_words)
+#print(missing_words)
+
+# c. Return only those items that are present in the second list, but not in the first.
+
+def find_unknowns_merge_pattern_c(vocab, wds):
+    """ Both the vocab and wds must be sorted.  Return a new
+        list of words from wds that do not occur in vocab.
+    """
+
+    result = []
+    xi = 0
+    yi = 0
+
+    while True:
+        if xi >= len(vocab):
+            result.extend(wds[yi:])
+            return result
+
+        if yi >= len(wds):
+            return result
+
+        if vocab[xi] == wds[yi]:  # Good, word exists in vocab
+            yi += 1
+
+        elif vocab[xi] < wds[yi]: # Move past this vocab word,
+            xi += 1
+
+        else:                     # Got word that is not in vocab
+            result.append(wds[yi])
+            yi += 1
+
+all_words = get_words_in_book("AliceInWonderland.txt")
+all_words.sort()
+book_words = remove_adjacent_dups(all_words)
+#missing_words = find_unknowns_merge_pattern_c(bigger_vocab, book_words)
+#print(missing_words)
+
+# d. Return items that are present in either the first or the second list.
+
+def find_unknowns_merge_pattern_d(wds, vocab):
+    """ Both the vocab and wds must be sorted.  Return a new
+        list of words from wds that do not occur in vocab.
+    """
+
+    result = []
+    xi = 0
+    yi = 0
+
+    while True:
+        if xi >= len(vocab):
+            result.extend(wds[yi:])
+            return result
+
+        if yi >= len(wds):
+            result.extend(vocab[xi:])
+            return result
+
+        if vocab[xi] == wds[yi]:  # Good, word exists in vocab
+            yi += 1
+
+        elif vocab[xi] < wds[yi]: # Move past this vocab word,
+            xi += 1
+
+        else:                     # Got word that is not in vocab
+            result.append(wds[yi])
+            yi += 1
+
+all_words = get_words_in_book("AliceInWonderland.txt")
+all_words.sort()
+book_words = remove_adjacent_dups(all_words)
+#missing_words = find_unknowns_merge_pattern_d(bigger_vocab, book_words)
+#print(missing_words)
+
+# e. Return items from the first list that are not eliminated by a matching element in the second list. In this case, an item in the second list “knocks out” just one matching item in the first list. This operation is sometimes called bagdiff. For example bagdiff([5,7,11,11,11,12,13], [7,8,11]) would return [5,11,11,12,13]
+
+def bagdiff(xs, ys):
+    """ merge sorted lists xs and ys. Return a sorted result """
+    xi = 0
+    yi = 0
+    result = []
+
+    while True:
+        if xi >= len(xs):
+            return result          # And we're done.
+
+        if yi >= len(ys):
+            result.extend(xs[xi:])
+            return result
+
+        # Both lists still have items, copy smaller item to result.
+        if xs[xi] < ys[yi]:
+            result.append(xs[xi])
+            xi += 1
+        elif xs[xi] == ys[yi]:
+            xi += 1
+            yi += 1
+        else:
+            yi += 1
+
+# 2. Modify the queens program to solve some boards of size 4, 12, and 16. What is the maximum size puzzle you can usually solve in under a minute?
+
+def share_diagonal(x0, y0, x1, y1):
+    """ Is (x0, y0) on a shared diagonal with (x1, y1)? """
+    dy = abs(y1 - y0)        # Calc the absolute y distance
+    dx = abs(x1 - x0)        # CXalc the absolute x distance
+    return dx == dy          # They clash if dx == dy
+
+def col_clashes(bs, c):
+    """ Return True if the queen at column c clashes
+         with any queen to its left.
+    """
+    for i in range(c):     # Look at all columns to the left of c
+          if share_diagonal(i, bs[i], c, bs[c]):
+              return True
+
+    return False           # No clashes - col c has a safe placement.
+
+def has_clashes(the_board):
+    """ Determine whether we have any queens clashing on the diagonals.
+        We're assuming here that the_board is a permutation of column
+        numbers, so we're not explicitly checking row or column clashes.
+    """
+    for col in range(1,len(the_board)):
+        if col_clashes(the_board, col):
+            return True
+    return False
+
+def main_4():
+    import random
+    rng = random.Random()   # Instantiate a generator
+
+    bd = list(range(4))     # Generate the initial permutation
+    num_found = 0
+    t0 = time.clock()
+    while num_found < 1:
+       rng.shuffle(bd)
+       if not has_clashes(bd):
+           num_found += 1
+           print(bd)
+    t1 = time.clock()
+    print("That took {0:.4f} seconds.".format(t1-t0))
+
+main_4()
+
+def main_12():
+    import random
+    rng = random.Random()   # Instantiate a generator
+
+    bd = list(range(12))     # Generate the initial permutation
+    num_found = 0
+    t0 = time.clock()
+    while num_found < 1:
+       rng.shuffle(bd)
+       if not has_clashes(bd):
+           num_found += 1
+           print(bd)
+    t1 = time.clock()
+    print("That took {0:.4f} seconds.".format(t1-t0))
+
+#main_12()
+
+def main_16():
+    import random
+    rng = random.Random()   # Instantiate a generator
+
+    bd = list(range(16))     # Generate the initial permutation
+    num_found = 0
+    t0 = time.clock()
+    while num_found < 1:
+       rng.shuffle(bd)
+       if not has_clashes(bd):
+           num_found += 1
+           print(bd)
+    t1 = time.clock()
+    print("That took {0:.4f} seconds.".format(t1-t0))
+
+#main_16()
+
+def main_18():
+    import random
+    rng = random.Random()   # Instantiate a generator
+
+    bd = list(range(18))     # Generate the initial permutation
+    num_found = 0
+    t0 = time.clock()
+    while num_found < 1:
+       rng.shuffle(bd)
+       if not has_clashes(bd):
+           num_found += 1
+           print(bd)
+    t1 = time.clock()
+    print("That took {0:.4f} seconds.".format(t1-t0))
+
+#main_18()
+
+# 3. Adapt the queens program so that we keep a list of solutions that have already printed, so that we don’t print the same solution more than once.
+
+def main_8():
+    import random
+    rng = random.Random()   # Instantiate a generator
+    alrdy = []
+
+    bd = list(range(8))     # Generate the initial permutation
+    num_found = 0
+    while num_found < 1:
+       rng.shuffle(bd)
+       if not has_clashes(bd) and bd not in alrdy:
+           alrdy.append(bd)
+           num_found += 1
+           print(bd)
+           return bd
+
+# 4. Chess boards are symmetric: if we have a solution to the queens problem, its mirror solution — either flipping the board on the X or in the Y axis, is also a solution. And giving the board a 90 degree, 180 degree, or 270 degree rotation is also a solution. In some sense, solutions that are just mirror images or rotations of other solutions — in the same family — are less interesting than the unique “core cases”. Of the 92 solutions for the 8 queens problem, there are only 12 unique families if you take rotations and mirror images into account. Wikipedia has some fascinating stuff about this.
+
+# a. Write a function to mirror a solution in the Y axis,
+
+def mirror_y(sol):
+    mir = []
+    for i in sol:
+        mir.append(7-i)
+    return mir
+
+#print(mirror_y(main_8()))
+
+# b. Write a function to mirror a solution in the X axis,
+
+def mirror_x(sol):
+    cop = sol.copy()
+    list.reverse(cop)
+    return cop
+
+#print(mirror_x(main_8()))
+
+# c. Write a function to rotate a solution by 90 degrees anti-clockwise, and use this to provide 180 and 270 degree rotations too.
+
+def rot_270(sol):
+    rot = []
+    for i in range(0,len(sol)):
+        for j in range(0,len(sol)):
+            if i == sol[j]:
+                    rot.append(7-j)
+                    break
+                
+    return rot
+
+print(rot_270(main_8()))
+
+def rot_180(sol):
+    return rot_270(rot_270(sol))
+
+print(rot_180(main_8()))
+
+def rot_90(sol):
+    return rot_270(rot_270(rot_270(sol)))
+
+#print(rot_270(main_8()))
+
+#d. Write a function which is given a solution, and it generates the family of symmetries for that solution. For example, the symmetries of [0,4,7,5,2,6,1,3] are
+
+def gen_fam(sol):
+    famtree = []
+    famtree.append(sol)
+    famtree.append(rot_270(sol))
+    famtree.append(rot_180(sol))
+    famtree.append(rot_90(sol))
+    famtree.append(mirror_x(sol))
+    famtree.append(rot_270(mirror_x(sol)))
+    famtree.append(mirror_y(sol))
+    famtree.append(rot_90(mirror_x(sol)))
+    return famtree
+
+#print(gen_fam([0,4,7,5,2,6,1,3]))
+
+# e. Now adapt the queens program so it won’t list solutions that are in the same family. It only prints solutions from unique families.
+
+def main_8_e():
+    import random
+    rng = random.Random()   # Instantiate a generator
+    alrdy = []
+
+    bd = list(range(8))     # Generate the initial permutation
+    num_found = 0
+    while num_found < 12:
+       rng.shuffle(bd)
+       if not has_clashes(bd) and bd not in alrdy:
+           for i in gen_fam(bd):
+               alrdy.append(i)
+           num_found += 1
+    return alrdy
+
+#main_8_e()
+
+# 5. Every week a computer scientist buys four lotto tickets. She always chooses the same prime numbers, with the hope that if she ever hits the jackpot, she will be able to go onto TV and Facebook and tell everyone her secret. This will suddenly create widespread public interest in prime numbers, and will be the trigger event that ushers in a new age of enlightenment. She represents her weekly tickets in Python as a list of lists:
+
+my_tickets = [ [ 7, 17, 37, 19, 23, 43],
+               [ 7,  2, 13, 41, 31, 43],
+               [ 2,  5,  7, 11, 13, 17],
+               [13, 17, 37, 19, 23, 43] ]
+
+# a. Each lotto draw takes six random balls, numbered from 1 to 49. Write a function to return a lotto draw.
+
+import random
+
+import sys
+
+def test(did_pass):
+    """  Print the result of a test.  """
+    linenum = sys._getframe(1).f_lineno   # Get the caller's line number.
+    if did_pass:
+        msg = "Test at line {0} ok.".format(linenum)
+    else:
+        msg = ("Test at line {0} FAILED.".format(linenum))
+    print(msg)
+
+def lottod():
+    draw = []
+    for i in range(0,6):
+        draw.append(random.randint(1,49))
+    return draw
+
+print(lottod())
+
+# b. Write a function that compares a single ticket and a draw, and returns the number of correct picks on that ticket:
+
+def lotto_match(t, d):
+    same = 0
+    for i in t:
+        if i in d:
+            same += 1
+    return same
+
+test(lotto_match([42,4,7,11,1,13], [2,5,7,11,13,17]) == 3)
+
+# c. Write a function that takes a list of tickets and a draw, and returns a list telling how many picks were correct on each ticket:
+
+def lotto_matches(d,t):
+    res = []
+    for i in t:
+        res.append(lotto_match(d,i))
+    return res
+
+test(lotto_matches([42,4,7,11,1,13], my_tickets) == [1,2,3,1])
+
+# d. Write a function that takes a list of integers, and returns the number of primes in the list:
+
+def primes_in(l):
+    prime = 6
+    for i in l:
+        for j in range(2,i):
+            if i % j == 0 and j != 1:
+                prime -= 1
+            else:
+                break
+    return prime
+
+test(primes_in([42, 4, 7, 11, 1, 13]) == 3)
+        
+# e. Write a function to discover whether the computer scientist has missed any prime numbers in her selection of the four tickets. Return a list of all primes that she has missed:
+
+def prime_misses(t):
+    prime = []
+    hmmmm = []
+    for l in t:
+        for i in l:
+            p = True
+            for j in range(2,i):
+                if i % j == 0:
+                    p = False
+            if p:
+                prime.append(i)
+    allp = []
+    for i in range(2,49):
+            p = True
+            for j in range(2,i):
+                if i % j == 0:
+                    p = False
+            if p:
+                allp.append(i)
+    for i in allp:
+        if i not in prime:
+            hmmmm.append(i)
+    return hmmmm
+
+test(prime_misses(my_tickets) == [3, 29, 47])
+
+# f. Write a function that repeatedly makes a new draw, and compares the draw to the four tickets.
+
+# i. Count how many draws are needed until one of the computer scientist’s tickets has at least 3 correct picks. Try the experiment twenty times, and average out the number of draws needed.
+
+draws = 0
+for i in range(0,20):
+    while True:
+        for j in lotto_matches(lottod(), my_tickets):
+            draws += 1
+            if j >= 3:
+                break
+        if j >= 3:
+            break
+print(str(draws/20))
+
+# ii. How many draws are needed, on average, before she gets at least 4 picks correct?
+
+draws = 0
+for i in range(0,20):
+    while True:
+        for j in lotto_matches(lottod(), my_tickets):
+            draws += 1
+            if j >= 4:
+                break
+        if j >= 4:
+            break
+print(str(draws/20))
+
+# iii. How many draws are needed, on average, before she gets at least 5 correct? (Hint: this might take a while. It would be nice if you could print some dots, like a progress bar, to show when each of the 20 experiments has completed.)
+
+draws = 0
+for i in range(0,20):
+    while True:
+        if draws % 20 == 0:
+            print(".")
+        for j in lotto_matches(lottod(), my_tickets):
+            draws += 1
+            if j >= 5:
+                break
+        if j >= 5:
+            break
+print(str(draws/20))

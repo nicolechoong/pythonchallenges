@@ -48,7 +48,7 @@ for i in range(0,11):
             te += p[e]
 for i in range(0,5):
     e = random.randint(0,len(p))
-    te += p[e]
+    te += p[e-1]
 
 for a in range(0,len(te), 20):
     print(te[a:a+20])

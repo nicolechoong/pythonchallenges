@@ -1,0 +1,23 @@
+print("VENDING MACHINE\n[COLA RM2]    [SPRITE RM3]    [ICE LEMON TEA RM3.50]\n")
+order = input("Please choose your drink\n   > ")
+if order == "cola":
+    amount = 200
+elif order == "sprite":
+    amount = 300
+elif order == "ice lemon tea":
+    amount = 350
+
+while True:
+    print("Amount due: "+str(amount))
+    insert = input("Please insert a 10 sen, 20 sen or 50 sen coin (Type 10, 20 or 50)\n   > ")
+    if insert in ["10", "20", "50"]:
+        amount -= int(insert)
+        if amount == 0:
+            print("["+str.upper(order)+"] DISPENSED")
+            break
+        elif amount < 0:
+            print("["+str.upper(order)+"] DISPENSED")
+            print("Change: "+str(abs(amount))+" sen")
+            break
+    else:
+        print("Coin rejected")

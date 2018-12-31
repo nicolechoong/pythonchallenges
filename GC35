@@ -1,0 +1,45 @@
+s1 = 0
+s2 = 0
+q1 = []
+a1 = []
+q2 = []
+a2 = []
+
+print("\nPLAYER 1, please face the screen away from the other player")
+for i in range(1,6):
+    q1.append(input("\nQ"+str(i)+": "))
+    a1.append(input("A"+str(i)+": "))
+
+print("\nPLAYER 2, please face the screen away from the other player")
+for i in range(1,6):
+    q2.append(input("\nQ"+str(i)+": "))
+    a2.append(input("A"+str(i)+": "))
+
+for i in range(1, 6):
+    print("\nQUESTION FOR PLAYER 1")
+    a = input(q1[i-1]+": ")
+    if a == a1[i-1]:
+              print("CORRECT")
+              s1 += 1
+    else:
+              print("WRONG")
+    print("\nQUESTION FOR PLAYER 2")
+    a = input(q1[i-1]+": ")
+    if a == a2[i-1]:
+              print("CORRECT")
+              s2 += 1
+    else:
+              print("WRONG")
+
+if s1 > s2:
+              print("PLAYER 1 WINS")
+              print("Player 1 Score: "+str(s1))
+              print("Player 2 Score: "+str(s2))
+elif s2 > s1:
+              print("PLAYER 2 WINS")
+              print("Player 1 Score: "+str(s1))
+              print("Player 2 Score: "+str(s2))
+elif s1 == s2:
+              print("DRAW")
+              print("Player 1 Score: "+str(s1))
+              print("Player 2 Score: "+str(s2))

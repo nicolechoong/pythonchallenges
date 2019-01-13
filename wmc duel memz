@@ -1,0 +1,157 @@
+import array
+import copy
+
+board = [[" "," "," "," "," "," "],[" "," "," "," "," "," "],[" "," "," "," "," "," "],[" "," "," "," "," "," "],[" "," "," "," "," "," "],[" "," "," "," "," "," "]]
+p1 = []
+p2 = []
+r1 = []
+r2 = []
+actx = []
+acty = []
+dead = []
+alll = []
+c = ["O","X"]
+plays = [p2,p1,p2,acty,actx,dead,r2,r1]
+
+def genall():
+    for i in range(1,7):
+        for j in range(1,7):
+            alll.append(str(i)+str(j))
+    return alll
+
+def ininin(l1,l2):
+    for i in l1:
+        if i not in l2:
+            return False
+    return True
+
+def check(pos,play):
+    if pos in plays[play+3] or pos in dead:
+        return False
+    else:
+        if (pos in p2 and play == 1) or (pos in p1 and play == 0):
+            return False
+        else:
+            return True
+
+def remove(l1,l2):
+    for i in l1:
+        if i in l2 and i not in dead:
+            dead.append(i)
+
+def surround(pos,play):
+    for k in range(0,2):
+        for i in range(-1,2):
+            for j in range(-1,2):
+                temp = str(int(pos[0])+i)+str(int(pos[1])+j)
+                if len(temp) == 2 and temp[1] not in ["0","7"] and temp[0] not in ["0","7"] and temp not in plays[play]:
+                    plays[play].append(temp)
+    if pos not in plays[play+6]:
+        plays[play + 6].append(pos)
+    remove(p1, p2)
+
+def real(pos,play):
+    if int(pos[0])-1 < 1 and str(int(pos[0])+ 1)+pos[1] in plays[play+3] and pos not in plays[play+6]:
+        plays[play+6].append(pos)
+    if int(pos[0])+1 > 6 and str(int(pos[0])- 1)+pos[1] in plays[play+3] and pos not in plays[play+6]:
+        plays[play+6].append(pos)
+    if int(pos[1])-1 < 1 and pos[0]+str(int(pos[1])+1) in plays[play+3] and pos not in plays[play+6]:
+        plays[play+6].append(pos)
+    if int(pos[1])+1 > 6 and pos[0]+str(int(pos[1])-1) in plays[play+3] and pos not in plays[play+6]:
+        plays[play+6].append(pos)
+    if pos in ["11","61","16","66"] and pos not in plays[play+6]:
+        plays[play+6].append(pos)
+    if str(int(pos[0])+ 2)+pos[1] in plays[play+3] and str(int(pos[0])-1)+pos[1] in plays[play+3] and pos not in plays[play+6]:
+        plays[play+6].append(pos)
+    if str(int(pos[0])- 2)+pos[1] in plays[play+3] and str(int(pos[0])+1)+pos[1] in plays[play+3] and pos not in plays[play+6]:
+        plays[play+6].append(pos)
+    if pos[0]+str(int(pos[1])+ 2) in plays[play+3] and pos[0]+str(int(pos[1])-1) in plays[play+3] and pos not in plays[play+6]:
+        plays[play+6].append(pos)
+    if pos[0]+str(int(pos[1])- 2) in plays[play+3] and pos[0]+str(int(pos[1])+1) in plays[play+3] and pos not in plays[play+6]:
+        plays[play+6].append(pos)
+    if str(int(pos[0])+ 1)+pos[1] in plays[play+3] and str(int(pos[0])-2)+pos[1] in plays[play+3] and pos not in plays[play+6]:
+        plays[play+6].append(pos)
+    if str(int(pos[0])- 1)+pos[1] in plays[play+3] and str(int(pos[0])+2)+pos[1] in plays[play+3] and pos not in plays[play+6]:
+        plays[play+6].append(pos)
+    if pos[0]+str(int(pos[1])+ 1) in plays[play+3] and pos[0]+str(int(pos[1])-2) in plays[play+3] and pos not in plays[play+6]:
+        plays[play+6].append(pos)
+    if pos[0]+str(int(pos[1])- 1) in plays[play+3] and pos[0]+str(int(pos[1])+2) in plays[play+3] and pos not in plays[play+6]:
+        plays[play+6].append(pos)
+
+
+    hoh = []
+    for i in range(-1,2):
+        for j in range(-1,2):
+            temp = str(int(pos[0])+i)+str(int(pos[1])+j)
+            if len(temp) == 2 and temp[1] not in ["0","7"] and temp[0] not in ["0","7"]:
+                hoh.append(temp)
+    if ininin(hoh,plays[play]) and pos not in plays[play+6]:
+        plays[play+6].append(pos)
+
+
+
+def inpt(play):
+    while True:
+        kim = input("Player %s: Please enter a square\n   > " % (c[play]))
+        try:
+            valid_number = int(kim)
+            if len(kim) == 2 and kim[1] not in ["0", "7"] and kim[0] not in ["0", "7"]:
+                if check(kim, play):
+                    plays[play + 3].append(kim)
+                    surround(kim, play)
+                    print(p1)
+                    for i in plays[play]:
+                        real(i, play)
+                    h = (play + 1) % 2
+                    for i in plays[h]:
+                        real(i, h)
+                    updateb(kim, play)
+                    break
+                else:
+                    print("\nInvalid square\n")
+            else:
+                print("\nInvalid square\n")
+        except ValueError:
+            print("\nInvalid input\n")
+
+def updateb(pos,play):
+    if play == 1:
+        board[int(pos[0])-1][int(pos[1])-1] = "X"
+    else:
+        board[int(pos[0])-1][int(pos[1])-1] = "O"
+    output()
+
+def output():
+    print("")
+    otpt = ""
+    otpt += " -------------------------\n"
+    for i in range(0,6):
+        for j in range(0,6):
+            otpt += " | "
+            otpt += board[i][j]
+        otpt += " | "
+        otpt += "\n -------------------------\n"
+    print(otpt)
+
+def gamefin(e,play):
+    if len(r1)+len(r2)+len(dead) == 36:
+        return True
+    else:
+        return False
+
+turn = 0
+genall()
+while True:
+    turn += 1
+    if turn%2 == 1:
+        inpt(1)
+    else:
+        inpt(0)
+    if gamefin(alll,turn%2):
+        if len(p1) > len(p2):
+            print("Player X wins")
+        elif len(p1) < len(p2):
+            print("Player O wins")
+        elif len(p1) == len(p2):
+            print("Player %s wins" %(c[turn%2]))
+        break

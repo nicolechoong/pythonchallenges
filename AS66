@@ -1,163 +1,138 @@
-#Four-in-a-row Challenge - www.101computing.net/four-in-a-row-challenge/
-import turtle
-from random import randint
-from time import sleep
-YELLOW=1
-RED=2
+# 1 PLAYER VS COMPUTER, COMPUTER MAKES RANDOM MOVES
 
-#Draw the grid on screen with all the tokens
-def drawGrid(grid):
-  global RED, YELLOW
-  #Clear the screen
-  #myPen.clear()
-  myPen.setheading(0)
-  myPen.goto(-150,130)
-  for row in range (0,6):
-      for col in range (0,7):
-    		if grid[row][col]==0:
-    		  myPen.fillcolor("#FFFFFF")
-    		elif grid[row][col]==RED:
-    		  myPen.fillcolor("#FF0000")
-    		elif grid[row][col]==YELLOW:
-    		  myPen.fillcolor("#FFFF00")
-		
-    		myPen.begin_fill()
-    		myPen.circle(25)
-    		myPen.end_fill()
-	  
-    		myPen.penup()
-    		myPen.forward(50)
-    		myPen.pendown()	
-      myPen.setheading(270) 
-      myPen.penup()
-      myPen.forward(50)
-      myPen.setheading(180) 
-      myPen.forward(50*7)
-      myPen.setheading(0)
-      myPen.getscreen().update()
+import random
+player = []
+com = []
+deck = []
 
-def checkIfWinner(grid, color):
-  #--------------------COMPLETE THE CODE HERE ---------------------------
-  # Check if 4 in a row / column or diagonal
-  # Returns color if so!
-  #----------------------------------------------------------------------
-  for i in range(0,7):
-    if checkDown(grid, color, i):
-      return color
-  for i in range(0,6):
-    if checkHor(grid, color, i):
-      return color
-  if checkDiagonalLR(grid, color):
-    return color
-  if checkDiagonalRL(grid, color):
-    return color
-  #Returns 0 if not
-  return 0
+def genDeck():
+    for i in ["R","Y","G","B"]:
+        for j in range(0,10):
+            card = i+str(j)
+            deck.append(card)
+        for j in ["S","T","R"]:
+            card = i+str(j)
+            deck.append(card)
+    deck.append("+4")
+    deck.append("+4")
+    deck.append("WC")
+    deck.append("WC")
 
-def checkDown(grid, colour, col):
-  inarow = 0
-  for i in range(0, 6):
-    if grid[i][col] != colour:
-      inarow = 0
+def randomCard():
+    if len(deck) == 0:
+        print("RESHUFFLING")
+        genDeck()
+        for i in player:
+            deck.remove(i)
+        for i in com:
+            deck.remove(i)
+    card = deck[random.randint(0,len(deck)-1)]
+    deck.remove(card)
+    return card
+
+def startGame():
+    genDeck()
+    for i in [player,com]:
+        for j in range(0,8):
+            i.append(randomCard())
+    topcard = randomCard()
+    while topcard[1] in ["S","T","R"] or topcard in ["+4","WC"]:
+        topcard = randomCard()
+    return topcard
+
+def inputCard(col, val):
+    print("Your deck: ")
+    print(player)
+    while True:
+        card = input("Please choose a card from your deck [IF NO CARD, INPUT DRAW]:\n   > ")
+        if card == "DRAW":
+            print("Player Draws!")
+            player.append(randomCard())
+            card = col+val
+            return card, True
+        if card in player and (card[0] == col or card[1] == val or card in ["WC", "+4"]):
+            player.remove(card)
+            return card, False
+        else:
+            print("Invalid card")
+
+def comChoose(col,val):
+    for i in com:
+        if i[0] == col or i[1] == val or i in ["WC", "+4"]:
+            print("Computer: "+i)
+            com.remove(i)
+            return i, False
+    com.append(randomCard())
+    card = col+val
+    print("Computer Draws!")
+    return card, True
+
+def chooseColour(play):
+    if play == player:
+        while True:
+            col = input("Choose the colour:\n   > ")
+            if col in ["R","G","Y","B"]:
+                return col
+            print("Invalid colour")
     else:
-      inarow += 1
-      if inarow == 4:
+        for i in com[0]:
+            if i[0] in ["R","G","Y","B"]:
+                return i[0]
+
+def drawCard(op,n):
+    if op == player:
+        print("Player draws",str(n),"cards!")
+    elif op == com:
+        print("Computer draws",str(n),"cards!")
+    for i in range(0,n):
+        op.append(randomCard())
+
+def checkEnd(play):
+    if len(play) == 0:
         return True
-        break
-      
-def checkHor(grid, colour, row):
-  inarow = 0
-  for i in range(0, 7):
-    if grid[row][i] != colour:
-      inarow = 0
-    else:
-      inarow += 1
-      if inarow == 4:
-        return True
-        break
 
-def checkDiagonalLR(grid, colour):
-  check = [(3,0),(4,0),(5,0),(5,1),(5,2),(5,3)]
-  for i in range(0,6):
-    row,col = check[i]
-    inarow = 0
-    while row != 0 and col < 6:
-      if grid[row][col] != colour:
-        inarow = 0
-      else:
-        inarow += 1
-        if inarow == 4:
-          return True
-      row -= 1
-      col += 1
-      
-def checkDiagonalRL(grid, colour):
-  check = [(3,6),(4,6),(5,6),(5,5),(5,4),(5,3)]
-  for i in range(0,6):
-    row,col = check[i]
-    inarow = 0
-    while row != 0 and col >= 0:
-      if grid[row][col] != colour:
-        inarow = 0
-      else:
-        inarow += 1
-        if inarow == 4:
-          return True
-      row -= 1
-      col -= 1
+def turn(topcard, play, op):
+    endGame = False
+    while True:
+        print("Topcard: "+topcard)
+        col, val = topcard[0],topcard[1]
+        if play == player:
+            card,draw = inputCard(col, val)
+        else:
+            card,draw = comChoose(col, val)
+        if checkEnd(play):
+            if play == player:
+                endGame = "Player"
+            else:
+                endGame = "Computer"
+            break
+        col, val = card[0],card[1]
+        if draw == False:
+            if card[1] == "T":
+                drawCard(op,2)
+            elif card == "WC":
+                col = chooseColour(play)
+            elif card == "+4":
+                drawCard(op,4)
+                col = chooseColour(play)
+                val = "4"
+            topcard = col+val
+            if val != "S":
+                break
+        else:
+            break
+    return topcard, endGame
 
-#Main Program Starts Here
-myPen = turtle.Turtle()
-myPen.hideturtle()
-myPen.speed(500)
-window = turtle.Screen()
-window.bgcolor("#2288FF")
-myPen.color("#2288FF")
-myPen.tracer(0)
-myPen.speed(0)
+def main():
+    endGame = False
+    count = 0
+    topcard = startGame()
+    while endGame == False:
+        count += 1
+        if count%2 == 1:
+            topcard, endGame = turn(topcard,player,com)
+        else:
+            topcard, endGame = turn(topcard,com,player)
+    print(endGame,"wins!")
 
-#Initialise empty 6 by 7 connect4 grid
-connect4=[]
-for row in range(0,6):
-  connect4.append([])
-  for col in range(0,7):
-    connect4[row].append(0)
-
-#Play the game, take it in turn. Up to 42 turns
-for turn in range(1,43):
-  #Randomly pick an column that is not full
-  column = randint(0,6)
-  while connect4[0][column]!=0:
-    #This column is already full, pick another one
-    column = randint(0,6)
-  
-  #Make the token slide to the bottom of the grid (Stacked on top of any other existing tokens)
-  row=5
-  while connect4[row][column]!=0:
-    row=row - 1
-  
-  #Find out the colour of the current player (1 or 2)
-  playerColor = (turn % 2) + 1
-  #Place the token on the grid
-  connect4[row][column]=playerColor
-  #Draw the grid
-  drawGrid(connect4)
-  
-  #Check if this token wins the game
-  winner = checkIfWinner(connect4, playerColor)
-  if winner==RED:
-    myPen.penup()
-    myPen.color("#FF0000")
-    myPen.goto(-70, -170)
-    myPen.write("RED Wins!", None, None, "24pt bold")
-    myPen.getscreen().update()
-    break  #Stop the game
-  elif winner==YELLOW:
-    myPen.penup()
-    myPen.color("#FFFF00")
-    myPen.goto(-80, -170)
-    myPen.write("Yellow Wins!", None, None, "24pt bold") 
-    myPen.getscreen().update()
-    break  #Stop the game
-
-  sleep(0.2)
+main()

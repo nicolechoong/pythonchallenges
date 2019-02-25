@@ -1,15 +1,21 @@
-ex = [8,4,3,2,5]
+import random
 
-for k in range(0,len(ex)-1):
-    i = 0
-    j = i + 1
-    a = ex[i]
-    b = ex[j]
-    while a > b:
-        (ex[i], ex[j]) = (ex[j], ex[i])
-        (i, j) = (i+1, j+1)
-        if j == len(ex):
-            break
-        a = ex[i]
-        b = ex[j]
-        print(ex)
+def randomList(i):
+    list = []
+    for j in range(0,i):
+        list.append(random.randint(0,100))
+    return list
+
+
+def bubbleSort(list):
+    n = len(list)-1
+    for i in range(0,len(list)-1):
+        for j in range(0,n):
+            if list[j] > list[j+1]:
+                temp = list[j]
+                list[j] = list[j+1]
+                list[j+1] = temp
+                print(list)
+        n = n-1
+
+bubbleSort(randomList(6))

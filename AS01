@@ -13,9 +13,7 @@ def bubbleSort(list):
     for i in range(0,len(list)-1):
         for j in range(0,n):
             if list[j] > list[j+1]:
-                temp = list[j]
-                list[j] = list[j+1]
-                list[j+1] = temp
+                list[j], list[j+1] = list[j+1], list[j]
         n = n-1
     print("Sorted: "+str(list))
     return list

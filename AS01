@@ -8,6 +8,7 @@ def randomList(i):
 
 
 def bubbleSort(list):
+    print("Unsorted: "+str(list))
     n = len(list)-1
     for i in range(0,len(list)-1):
         for j in range(0,n):
@@ -15,7 +16,8 @@ def bubbleSort(list):
                 temp = list[j]
                 list[j] = list[j+1]
                 list[j+1] = temp
-                print(list)
         n = n-1
+    print("Sorted: "+str(list))
+    return list
 
 bubbleSort(randomList(6))

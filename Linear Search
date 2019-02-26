@@ -1,0 +1,10 @@
+def linearSearch(list, item):
+    position = 0
+    found = False
+    while position < len(list) and not found:
+        if list[position] == item:
+            found = True
+            print("Item found")
+        position += 1
+    if not found:
+        print("Item not found")

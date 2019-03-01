@@ -1,0 +1,60 @@
+def CaesarEncode(TextString, key):
+    letters = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
+    string = ""
+    for i in str.upper(TextString):
+        try:
+            hi = str(i)
+        except UnicodeDecodeError:
+            continue
+        if i not in letters:
+            string += i
+        else:
+            string += letters[(list.index(letters,i)+key)%26]
+    return string
+
+def Encode():
+    MyText = open("MyText.txt","r")
+    MyCipher = open("MyCipher.txt","w")
+
+    key = int(input("\nPlease input the shift key\n   > "))
+    for line in MyText:
+        if line[-1] == "\n":
+            line = line[0:-1]
+        CipherLine = CaesarEncode(line, key)
+        MyCipher.write(CipherLine+"\n")
+
+    MyText.close()
+    MyCipher.close()
+
+def CaesarDecode(TextString, key):
+    letters = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
+    string = ""
+    if TextString[-1] == "\n":
+        TextString = TextString[0:-1]
+    for i in str.upper(TextString):
+        if i not in letters:
+            string += i
+        else:
+            string += letters[(list.index(letters,i)-key)%26]
+    return string
+
+def Decode():
+    MyCipher = open("MyCipher.txt","r")
+
+    key = int(input("\nPlease input the shift key\n   > "))
+    print("")
+    for line in MyCipher:
+        CipherLine = CaesarDecode(line,key)
+        print(CipherLine)
+
+    MyCipher.close()
+
+def Menu():
+    while True:
+        Choice = input("\nCAESAR CIPHER\n[1]: Encoding\n[2]: Decoding\n   > ")
+        if Choice == "1":
+            Encode()
+        elif Choice == "2":
+            Decode()
+
+Menu()

@@ -1,0 +1,36 @@
+total = []
+python = open("Test.py", "r")
+
+reed = python.readlines()
+for i in reed:
+   total.append(i[:-1].split(" "))
+print(total)
+
+def indentcounter(line):
+    count = 0
+    for i in line:
+        if i == "":
+            count += 1
+        else:
+            break
+    if count >= 4:
+        indentval = int(count/4)
+        for i in range(0,count-1):
+            line.pop(0)
+        line[0] = indentval
+    else:
+        line.insert(0,0)
+    return line
+
+for i in total:
+    if "if" in i:
+        for j in i:
+            if j == "==":
+                total[total.index(i)][i.index(j)] = "="
+                break
+        if i[-1][-1] == ":":
+            i[-1] = i[-1][:-1]
+print(total)
+
+for i in total:
+    print(indentcounter(i))

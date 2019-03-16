@@ -1,0 +1,144 @@
+# CURRENT STATUS: EQUALS SIGN TO ARROWS, CAPS AND OUTPUT WORKING, INDENTATION WOKRING, IF LOOPS WORKING BUT LIMITED TO NON-NESTED LOOPS, FOR LOOPS ARE WORKING AND INCLUSIVE OF STEP BUT DOESN'T YET SUPPORT NESTED FOR LOOPS
+# PLEASE TEST WITH SIMPLE ASSIGNMENT, SELECTION AND ITERATION IF YOU WANT TO SEE ACTUAL FUNCTIONING CODE THANKS
+
+total = []
+inlooop = []
+python = open("testtask.py", "r")
+
+reed = python.readlines()
+for i in reed:
+   total.append(i[:-1])
+# print(total)
+
+# MELVYN
+def equal2arrowconverter():
+    for line in range(0,len(total)):
+        List = []
+        for i in total[line]:
+            if i == "=":
+                if total[line][total[line].index(i)+1] != "=" and total[line][total[line].index(i)-1] != "=":
+                    List.append(" -> ")
+                else:
+                    List.append(i)
+            else:
+                List.append(i)
+        List = "".join(List)
+        total[line] = List
+    return
+
+# NICOLE
+def indent():
+    for line in total:
+        count = 0
+        while True:
+            if line[4*count:4*count+4] == "    ":
+                count += 1
+            else:
+                break
+        total[total.index(line)] = [count,line[4*count:]]
+    return total
+
+# BRANDON
+def codewordconverter():
+    pythonwd = ["print","while","for","if","else:","input","True","False"]
+    pseudowd = ["OUTPUT","WHILE","FOR","IF","ELSE","INPUT","TRUE","FALSE"]
+    for j in range(0,len(total)):
+        line = total[j][1].split()
+        for i in range(len(line)):
+            for x in range(0,len(pseudowd)):
+                if line[i] == pythonwd[x]:
+                    line[i] = pseudowd[x]
+        line = " ".join(line)
+        if "print" in line:
+            line = line.replace("print","OUTPUT")
+            line = line.replace("("," ")
+            line = line.replace(")"," ")
+        total[j][1] = line
+
+# JACOB
+indenter = []
+def indentation_identifier():
+    for line in total:
+        words = line[1].split()
+        if words == []:
+            indenter.append([line[0],""])
+        else:
+            indenter.append([line[0],words[0]])
+
+# JACOB
+def for_i_in_range_x_to_y():
+    new = []
+    can = []
+    counting = 0
+    unlock = ["#", "#"]
+    for v in range(0,len(indenter)):  # line, v
+        if unlock[0] == 1:
+            if unlock[1] == indenter[v][0]:
+                total.insert(v, [indenter[v][0], "END FOR"])
+                unlock = ["#", "#"]
+        if indenter[v][1] == "FOR":  # v 0
+            new.append("FOR")
+            can.append(total[v][len(total[v])-1].split(","))
+            unlock = [1, indenter[v][0]]
+            for q in can:
+                for w in q:
+                    for j in w:
+                        try:
+                            y = int(j)
+                            counting = counting + 1
+                            if counting == 1:
+                                new.append(str(y))
+                                new.append("->")
+                            if counting == 2:
+                                new.append(str(y))
+                            if counting == 3:
+                                new.append("STEP")
+                                new.append(str(y))
+                        except ValueError:
+                            y = 0
+            total[v] = [indenter[v][0]," ".join(new)]
+
+# NICOLE
+def ifstatement():
+    inloop = [0, 0] # Number of loops that it's in, Number of indents of the latest loop
+    for line in range(0,len(total)):
+        if inloop[0] > 0:
+            if total[line][0] > inloop[1]:
+                if total[line][1] != "THEN":
+                    total[line][0] = total[line][0]+inloop[0]
+                if "IF" not in total[line][1]:
+                    continue
+            else:
+                if "ELSE" not in total[line][1]:
+                    total.insert(line, [inloop[1],"ENDIF"])
+                    inloop = [inloop[0]-1, 0]
+                    continue
+
+        if "IF" in total[line][1]:
+            total[line][1] = total[line][1][:-1]
+            total[line][1] = total[line][1].replace("==","=")
+            inloop = [inloop[0]+1, total[line][0]]
+            total.insert(line+1, [int(total[line][0])+1,"THEN"])
+            continue
+
+        if "ELSE" in total[line][1]:
+            total[line][0] = total[line][0] + inloop[0]
+
+    if inloop[0] == 1:
+        total.append([inloop[1],"ENDIF"])
+    return total
+
+# NICOLE
+def output():
+    print("START PROGRAM")
+    for line in total:
+        out = " "*4*line[0] + line[1]
+        print(out)
+
+equal2arrowconverter()
+indent()
+codewordconverter()
+ifstatement()
+indentation_identifier()
+for_i_in_range_x_to_y()
+output()

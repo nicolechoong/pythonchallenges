@@ -1,9 +1,10 @@
-# CURRENT STATUS: EQUALS SIGN TO ARROWS, CAPS AND OUTPUT WORKING, INDENTATION WOKRING, IF LOOPS WORKING BUT LIMITED TO NON-NESTED LOOPS, FOR LOOPS ARE WORKING AND INCLUSIVE OF STEP BUT DOESN'T YET SUPPORT NESTED FOR LOOPS
+# CURRENT STATUS: EQUALS SIGN TO ARROWS, CAPS AND OUTPUT WORKING, INDENTATION WOKRING, IF LOOPS WORKING BUT LIMITED TO NON-NESTED LOOPS, FOR LOOPS ARE WORKING AND INCLUSIVE OF STEP BUT DOESN'T YET SUPPORT NESTED FOR LOOPS, ACCEPTS WHILE LOOPS WHERE THE CONDITION IS IN THE WHILE STATEMENT (NO BREAKS YET)
 # PLEASE TEST WITH SIMPLE ASSIGNMENT, SELECTION AND ITERATION IF YOU WANT TO SEE ACTUAL FUNCTIONING CODE THANKS
 
 total = []
 inlooop = []
 file_name = input("Please input your file name\n   > ")
+print()
 python = open(file_name, "r")
 
 reed = python.readlines()
@@ -100,6 +101,25 @@ def for_i_in_range_x_to_y():
             total[v] = [indenter[v][0]," ".join(new)]
 
 # NICOLE
+def whilestatement():
+    inloop = [0, 0]
+    for line in range(0,len(total)):
+        if inloop[0] > 0 and inloop[1] == total[line][0]:
+            total.insert(line, [inloop[1],"END WHILE"])
+            inloop = [inloop[0]-1, 0]
+            continue
+
+        if "WHILE" in total[line][1]:
+            total[line][1] = total[line][1][:-1]
+            total[line][1] = total[line][1].replace("==","=")
+            total[line][1] = total[line][1].replace("!=","<>")
+            inloop = [inloop[0]+1, total[line][0]]
+            continue
+    if inloop[0] == 1:
+        total.append([inloop[1],"END WHILE"])
+    return total
+
+# NICOLE
 def ifstatement():
     inloop = [0, 0] # Number of loops that it's in, Number of indents of the latest loop
     for line in range(0,len(total)):
@@ -118,6 +138,7 @@ def ifstatement():
         if "IF" in total[line][1]:
             total[line][1] = total[line][1][:-1]
             total[line][1] = total[line][1].replace("==","=")
+            total[line][1] = total[line][1].replace("!=","<>")
             inloop = [inloop[0]+1, total[line][0]]
             total.insert(line+1, [int(total[line][0])+1,"THEN"])
             continue
@@ -139,6 +160,7 @@ def output():
 equal2arrowconverter()
 indent()
 codewordconverter()
+whilestatement()
 ifstatement()
 indentation_identifier()
 for_i_in_range_x_to_y()

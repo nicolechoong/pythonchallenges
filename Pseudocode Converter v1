@@ -17,7 +17,7 @@ def equal2arrowconverter():
         for i in total[line]:
             if i == "=":
                 if total[line][total[line].index(i)+1] != "=" and total[line][total[line].index(i)-1] != "=":
-                    List.append(" -> ")
+                    List.append(" <- ")
                 else:
                     List.append(i)
             else:

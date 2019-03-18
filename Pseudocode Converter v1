@@ -3,7 +3,7 @@
 
 total = []
 inlooop = []
-file_name = input("Please input your file name")
+file_name = input("Please input your file name\n   > ")
 python = open(file_name, "r")
 
 reed = python.readlines()

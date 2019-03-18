@@ -3,7 +3,8 @@
 
 total = []
 inlooop = []
-python = open("testtask.py", "r")
+file_name = input("Please input your file name")
+python = open(file_name, "r")
 
 reed = python.readlines()
 for i in reed:

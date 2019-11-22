@@ -8,6 +8,9 @@ class Node:
     def __str__(self):
         return str(self.cargo)
 
+    def __gt__(self, other):
+        return self.cargo > other.cargo
+
 class Queue:
     def __init__(self):
         self.length = 0
@@ -114,14 +117,14 @@ class QueueADT:
 t1 = time.time()
 queue = Queue()
 for i in range(0,10000):
-    queue.insert(0)
+    queue.insert(i)
 t2 = time.time() - t1
 print(t2)
 
 t1 = time.time()
 queue1 = QueueADT()
 for i in range(0,10000):
-    queue1.insert(0)
+    queue1.insert(i)
 t2 = time.time() - t1
 print(t2)
 
@@ -134,19 +137,25 @@ class PriorityQueueADT:
         self.items = []
 
     def is_empty(self):
-        return not self.items
+        return self.items == []
 
     def insert(self, item):
-        self.items.append(item)
+        node = Node(item)
+        self.items.append(node)
         self.items = sorted(self.items)
 
+        for i in range(0,len(self.items)-1):
+            self.items[i].next = self.items[i+1]
+        self.items[-1].next = None
+
     def remove(self):
+        print(self.items[-1])
         self.items.pop()
 
 t1 = time.time()
 queue2 = PriorityQueueADT()
 for i in range(0,10000):
-    queue2.insert(0)
+    queue2.insert(abs(10000-i))
 t2 = time.time() - t1
 print(t2)
 
@@ -163,3 +172,5 @@ for i in range(0,10000):
     queue2.remove()
 t2 = time.time() - t1
 print(t2)
+
+# Performance is about the same

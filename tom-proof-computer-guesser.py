@@ -1,3 +1,11 @@
+def tomproof(ans, mid, num):
+    if ans == "H" and num > mid:
+        return True
+    elif ans == "L" and num < mid:
+        return True
+    else:
+        return False
+
 def hl():
     num = int(input("Please insert a number between 1 and 100\n   > "))
     high = 100

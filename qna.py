@@ -19,13 +19,13 @@ picfile.close()
 
 for q in range(1, len(array)):
     if len(array[q]) == 5:
-        picfile = open("qnapickle.pickle","wb")
-        print("Question: "+array[q][0])
+        print("\nQuestion: "+array[q][0])
         a = input("\nPlease input your answer\n   > ")
         print("\nMark scheme:")
         print(array[q][2])
         m = input("\nPlease input your mark\n   > ")
         array[q].append(m)
+        picfile = open("qnapickle.pickle","wb")
         pickle.dump(array, picfile)
         picfile.close()
 
